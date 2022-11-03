@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace CommBank.Models;
 
+
 public class Goal
 {
     [BsonId]
@@ -27,4 +28,6 @@ public class Goal
 
     [BsonRepresentation(BsonType.ObjectId)]
     public string? UserId { get; set; }
+
+    public string? Icon { get; set; }
 }
