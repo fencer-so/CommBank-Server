@@ -80,6 +80,16 @@ public class GoalController : ControllerBase
 
         updatedGoal.Id = goal.Id;
 
+        // set more properties here
+        updatedGoal.Name = goal.Name;
+        updatedGoal.TargetAmount = goal.TargetAmount;
+        updatedGoal.TargetDate = goal.TargetDate;
+        updatedGoal.Balance = goal.Balance;
+        updatedGoal.UserId = goal.UserId;
+        updatedGoal.Created = goal.Created;
+        updatedGoal.TransactionIds = goal.TransactionIds;
+        updatedGoal.TagIds = goal.TagIds;
+
         await _goalsService.UpdateAsync(id, updatedGoal);
 
         return NoContent();
