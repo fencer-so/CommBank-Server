@@ -66,9 +66,25 @@ public class GoalControllerTests
     public async void GetForUser()
     {
         // Arrange
+        var goals = collections.GetGoals();
+        var users = collections.GetUsers();
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+        GoalController controller = new(goalsService, usersService);
         
         // Act
-        
+        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
+        controller.ControllerContext.HttpContext = httpContext;
+        var result = await controller.Get(goals[0].Id!);
+
         // Assert
+        var index = 0;
+        foreach (Goal goal in result)
+        {
+            Assert.IsAssignableFrom<Goal>(goal);
+            Assert.Equal(goals[index].Id, goal.Id);
+            Assert.Equal(goals[index].UserID, goal.UserID);
+            index++;
+        }
     }
 }
