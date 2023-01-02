@@ -1,0 +1,5 @@
+export const GREEN = 'rgba(151, 215, 0, 0.49)'
+export const YELLOW = 'rgba(254, 223, 3, 0.4)'
+export const ORANGE = 'rgba(255, 104, 0, 0.5)'
+export const BLUE = 'rgba(25, 123, 189, 0.46)'
+export const PURPLE = 'rgba(199, 35, 177, 0.49)'
