@@ -19,6 +19,8 @@ public class Goal
 
     public DateTime Created { get; set; } = DateTime.Now;
 
+    public string? Icon { get; set; }
+
     [BsonRepresentation(BsonType.ObjectId)]
     public List<string>? TransactionIds { get; set; }
 
