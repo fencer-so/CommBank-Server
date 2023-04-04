@@ -1,5 +1,4 @@
-﻿using CommBank.Models;
-using CommBank.Services;
+﻿using CommBank.Services;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +19,7 @@ IGoalsService goalsService = new GoalsService(mongoDatabase);
 ITagsService tagsService = new TagsService(mongoDatabase);
 ITransactionsService transactionsService = new TransactionsService(mongoDatabase);
 IUsersService usersService = new UsersService(mongoDatabase);
+
 
 builder.Services.AddSingleton(accountsService);
 builder.Services.AddSingleton(authService);
