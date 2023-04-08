@@ -1,9 +1,8 @@
 ﻿using CommBank.Models;
 
-namespace CommBank.Services
+namespace CommBank.Services;
+
+public interface IAuthService
 {
-    public interface IAuthService
-    {
-        Task<User?> Login(string email, string password);
-    }
+    Task<User?> Login(string email, string password);
 }

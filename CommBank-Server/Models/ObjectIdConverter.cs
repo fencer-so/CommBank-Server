@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 
 class ObjectIdConverter : JsonConverter
 {
-
     public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
     {
         if (value is not null)
@@ -21,6 +20,4 @@ class ObjectIdConverter : JsonConverter
     {
         return typeof(ObjectId).IsAssignableFrom(objectType);
     }
-
-
 }
