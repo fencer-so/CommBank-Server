@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using CommBank.Models;
+﻿using CommBank.Models;
 using MongoDB.Driver;
 
 namespace CommBank.Services;

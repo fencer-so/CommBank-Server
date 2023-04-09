@@ -1,5 +1,5 @@
-﻿using CommBank.Models;
-using CommBank.Services;
+﻿using CommBank.Services;
+using CommBank_Server.Seed;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,10 +27,16 @@ builder.Services.AddSingleton(goalsService);
 builder.Services.AddSingleton(tagsService);
 builder.Services.AddSingleton(transactionsService);
 builder.Services.AddSingleton(usersService);
+builder.Services.AddSingleton<ILoadData, LoadData>();
+builder.Services.AddSingleton<SeedData>();
 
 builder.Services.AddCors();
 
 var app = builder.Build();
+
+var seeder = app.Services.GetRequiredService<SeedData>();
+
+await seeder.SeedDatabase();
 
 app.UseCors(builder => builder
    .AllowAnyOrigin()

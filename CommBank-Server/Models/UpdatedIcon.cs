@@ -5,7 +5,6 @@ interface IUpdatedIcon
     string Icon { get; set; }
 }
 
-
 public class UpdatedIcon : IUpdatedIcon
 {
     public UpdatedIcon(string icon)
