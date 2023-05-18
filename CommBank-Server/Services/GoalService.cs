@@ -15,6 +15,7 @@ public class GoalsService : IGoalsService
     public async Task<List<Goal>> GetAsync() =>
         await _goalsCollection.Find(_ => true).ToListAsync();
 
+    // This line is not in guide, optional?
     public async Task<List<Goal>?> GetForUserAsync(string id) =>
         await _goalsCollection.Find(x => x.UserId == id).ToListAsync();
 
