@@ -1,5 +1,6 @@
 ﻿using CommBank.Models;
 using CommBank.Services;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
