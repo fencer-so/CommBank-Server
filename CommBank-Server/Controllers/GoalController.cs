@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CommBank.Models;
 using CommBank.Services;
-using CommBank.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CommBank.Controllers;
 

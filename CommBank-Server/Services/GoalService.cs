@@ -18,8 +18,10 @@ public class GoalsService : IGoalsService
     public async Task<List<Goal>?> GetForUserAsync(string id) =>
         await _goalsCollection.Find(x => x.UserId == id).ToListAsync();
 
-    public async Task<Goal?> GetAsync(string id) =>
-        await _goalsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+    public async Task<Goal?> GetAsync(string id)
+    {
+        return await _goalsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+    }
 
     public async Task CreateAsync(Goal newGoal) =>
         await _goalsCollection.InsertOneAsync(newGoal);
@@ -29,4 +31,21 @@ public class GoalsService : IGoalsService
 
     public async Task RemoveAsync(string id) =>
         await _goalsCollection.DeleteOneAsync(x => x.Id == id);
+
+    public async Task Init()
+    {
+        await _goalsCollection.InsertManyAsync(new List<Goal>
+        {
+             new Goal
+             {
+                  Id="62a3f587102e921da1253d30",
+                   Name="House Down Payment",
+                    TargetAmount=10000,
+                    // TargetDate=DateTime.Now,
+                      Balance= 73501.82,
+                      // Created=DateTime.Now,
+                       UserId="62a29c15f4605c4c9fa7f306",
+             }
+        });
+    }
 }
