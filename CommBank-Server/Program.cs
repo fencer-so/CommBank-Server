@@ -1,5 +1,5 @@
-﻿using CommBank.Models;
-using CommBank.Services;
+﻿using CommBank.Services;
+using CommBank_Server.Services;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +28,10 @@ builder.Services.AddSingleton(tagsService);
 builder.Services.AddSingleton(transactionsService);
 builder.Services.AddSingleton(usersService);
 
+
+builder.Services.AddScoped<IMongoDatabase>(t => mongoDatabase);
+builder.Services.AddScoped<IInitService, InitService>();
+
 builder.Services.AddCors();
 
 var app = builder.Build();
@@ -50,4 +54,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
