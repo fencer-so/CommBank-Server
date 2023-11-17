@@ -21,7 +21,7 @@ public class GoalController : ControllerBase
     public async Task<List<Goal>> Get() =>
         await _goalsService.GetAsync();
 
-    [HttpGet("{id:length(24)}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Goal>> Get(string id)
     {
         var goal = await _goalsService.GetAsync(id);
@@ -68,7 +68,7 @@ public class GoalController : ControllerBase
         return CreatedAtAction(nameof(Get), new { id = newGoal.Id }, newGoal);
     }
 
-    [HttpPut("{id:length(24)}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> Update(string id, Goal updatedGoal)
     {
         var goal = await _goalsService.GetAsync(id);
