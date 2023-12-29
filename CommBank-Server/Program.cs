@@ -11,8 +11,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
-var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
-var mongoDatabase = mongoClient.GetDatabase("CommBank");
+var mongoClient = new MongoClient("mongodb+srv://anirbaanghatak1:WA2xSXmCVsieekf0@commbank.nchohyf.mongodb.net/?retryWrites=true&w=majority");
+var mongoDatabase = mongoClient.GetDatabase("commbank");
 
 IAccountsService accountsService = new AccountsService(mongoDatabase);
 IAuthService authService = new AuthService(mongoDatabase);
@@ -45,9 +45,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
 
+// anirbaanghatak1
+// WA2xSXmCVsieekf0
