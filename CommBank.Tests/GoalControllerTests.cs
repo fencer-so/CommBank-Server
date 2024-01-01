@@ -66,7 +66,6 @@ public class GoalControllerTests
     public async void GetForUser()
     {
         // Arrange
-        
         // Act
         
         // Assert
