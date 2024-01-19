@@ -79,7 +79,7 @@ public class GoalController : ControllerBase
         }
 
         updatedGoal.Id = goal.Id;
-        Console.WriteLine(goal.Balance);
+
         await _goalsService.UpdateAsync(id, updatedGoal);
 
         return NoContent();
