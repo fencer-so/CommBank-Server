@@ -1,0 +1,1 @@
+{"id":"62a3f587102e921da1253d32","icon":"\uD83E\uDD3A","name":"House Down Payment","targetAmount":100000,"targetDate":"2025-01-08T05:00:00Z","balance":73501.82,"created":"2022-06-11T01:53:10.857Z","transactionIds":null,"tagIds":null,"userId":"62a29c15f4605c4c9fa7f306"}
