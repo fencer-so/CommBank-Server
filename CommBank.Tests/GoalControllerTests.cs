@@ -86,5 +86,6 @@ public class GoalControllerTests
             Assert.IsAssignableFrom<Goal>(goal);
             Assert.Equal(goals[0].UserId, goal.UserId);
             index++;
+        }
     }
 }
