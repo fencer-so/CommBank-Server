@@ -9,6 +9,7 @@ public class GoalsService : IGoalsService
 
     public GoalsService(IMongoDatabase mongoDatabase)
     {
+         
         _goalsCollection = mongoDatabase.GetCollection<Goal>("Goals");
     }
 
