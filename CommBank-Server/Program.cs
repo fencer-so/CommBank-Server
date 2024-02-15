@@ -14,6 +14,12 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("
 var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
 var mongoDatabase = mongoClient.GetDatabase("CommBank");
 
+List<string> dataFiles = new List<string> { "Goals", "Tags", "Users", "Accounts", "Transactions" };
+foreach (var dataFile in dataFiles)
+{
+    DatabaseSeederService.SeedDataFromJson(mongoDatabase, dataFile, $"Data/{dataFile}.json");
+}
+
 IAccountsService accountsService = new AccountsService(mongoDatabase);
 IAuthService authService = new AuthService(mongoDatabase);
 IGoalsService goalsService = new GoalsService(mongoDatabase);
