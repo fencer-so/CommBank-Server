@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "3d34d49c-196d-49ff-b82d-6ea7fad97d28",
+		"name": "cwbank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23572904"
+	},
+	"item": [
+		{
+			"name": "http://localhost:5203/api/Goal/62a3f587102e921da1253d32?id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5203/api/Goal/62a3f587102e921da1253d32?id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5203",
+					"path": [
+						"api",
+						"Goal",
+						"62a3f587102e921da1253d32"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5203/api/Goal/62a3f587102e921da1253d32",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 404\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(404);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content type is 'text/xml'\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"text/xml\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response body is null\", function () {\r",
+							"    const responseData = xml2Json(pm.response.text());\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.null;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify that the response body is empty or null\", function () {\r",
+							"    const responseData = xml2Json(pm.response.text());\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.null;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Check for specific error message in the response\", function () {\r",
+							"    const responseData = xml2Json(pm.response.text());\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.a('string');\r",
+							"    pm.expect(responseData).to.equal(\"Specific error message\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5203/api/Goal/62a3f587102e921da1253d32",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5203",
+					"path": [
+						"api",
+						"Goal",
+						"62a3f587102e921da1253d32"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://localhost:5203/api/Goal/62a3f587102e921da1253d32",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:11366/api/Goal/62a3f587102e921da1253d32",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "11366",
+							"path": [
+								"api",
+								"Goal",
+								"62a3f587102e921da1253d32"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 17 Feb 2024 16:56:54 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"62a3f587102e921da1253d32\",\n    \"name\": \"House Down Payment\",\n    \"targetAmount\": 100000,\n    \"targetDate\": \"2025-01-08T05:00:00Z\",\n    \"balance\": 73501.82,\n    \"created\": \"2022-06-11T01:53:10.857Z\",\n    \"transactionIds\": null,\n    \"tagIds\": null,\n    \"userId\": \"62a29c15f4605c4c9fa7f306\",\n    \"icon\": \"🤺\"\n}"
+				}
+			]
+		}
+	]
+}
