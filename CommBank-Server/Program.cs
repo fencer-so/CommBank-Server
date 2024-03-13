@@ -51,3 +51,8 @@ app.MapControllers();
 
 app.Run();
 
+// Program.cs
+
+//IGoalsService goalsService = new GoalsService(mongoDatabase);
+builder.Services.AddSingleton(goalsService);
+
