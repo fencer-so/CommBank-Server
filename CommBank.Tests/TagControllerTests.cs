@@ -2,58 +2,65 @@
 using CommBank.Services;
 using CommBank.Models;
 using CommBank.Tests.Fake;
+using Microsoft.AspNetCore.Http;
+using Xunit;
+using System.Threading.Tasks;
 
 namespace CommBank.Tests;
 
 public class TagControllerTests
 {
-    private readonly FakeCollections collections;
+    private readonly FakeCollections _collections;
 
     public TagControllerTests()
     {
-        collections = new();
+        _collections = new FakeCollections();
     }
 
     [Fact]
-    public async void GetAll()
+    public async Task GetAllTags_ShouldReturnAllTags()
     {
         // Arrange
-        var tags = collections.GetTags();
-        ITagsService service = new FakeTagsService(tags, tags[0]);
-        TagController controller = new(service);
+        var expectedTags = _collections.GetTags();
+        ITagsService service = new FakeTagsService(expectedTags, expectedTags[0]);
+        var controller = new TagController(service);
+
+        // Set up HttpContext
+        controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
         // Act
-        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
-        controller.ControllerContext.HttpContext = httpContext;
         var result = await controller.Get();
 
         // Assert
-        var index = 0;
-        foreach (Tag tag in result)
+        Assert.Equal(expectedTags.Count, result.Count);
+        for (int i = 0; i < result.Count; i++)
         {
-            Assert.IsAssignableFrom<Tag>(tag);
-            Assert.Equal(tags[index].Id, tag.Id);
-            Assert.Equal(tags[index].Name, tag.Name);
-            index++;
+            Assert.IsType<Tag>(result[i]);
+            Assert.Equal(expectedTags[i].Id, result[i].Id);
+            Assert.Equal(expectedTags[i].Name, result[i].Name);
         }
     }
 
     [Fact]
-    public async void Get()
+    public async Task GetTagById_ShouldReturnCorrectTag()
     {
         // Arrange
-        var tags = collections.GetTags();
-        ITagsService service = new FakeTagsService(tags, tags[0]);
-        TagController controller = new(service);
+        var expectedTags = _collections.GetTags();
+        var expectedTag = expectedTags[0];
+        ITagsService service = new FakeTagsService(expectedTags, expectedTag);
+        var controller = new TagController(service);
+
+        // Set up HttpContext
+        controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
         // Act
-        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
-        controller.ControllerContext.HttpContext = httpContext;
-        var result = await controller.Get(tags[0].Id!);
+        var result = await controller.Get(expectedTag.Id!);
 
         // Assert
-        Assert.IsAssignableFrom<Tag>(result.Value);
-        Assert.Equal(tags[0], result.Value);
-        Assert.NotEqual(tags[1], result.Value);
+        Assert.IsType<Tag>(result.Value);
+        Assert.Equal(expectedTag.Id, result.Value.Id);
+        Assert.Equal(expectedTag.Name, result.Value.Name);
+        Assert.NotEqual(expectedTags[1].Id, result.Value.Id);
     }
 }
+
