@@ -24,8 +24,9 @@ public class GoalsService : IGoalsService
     public async Task CreateAsync(Goal newGoal) =>
         await _goalsCollection.InsertOneAsync(newGoal);
 
-    public async Task UpdateAsync(string id, Goal updatedGoal) =>
-        await _goalsCollection.ReplaceOneAsync(x => x.Id == id, updatedGoal);
+    // Updated method to support partial updates
+    public async Task UpdateAsync(string id, UpdateDefinition<Goal> updateDefinition) =>
+        await _goalsCollection.UpdateOneAsync(x => x.Id == id, updateDefinition);
 
     public async Task RemoveAsync(string id) =>
         await _goalsCollection.DeleteOneAsync(x => x.Id == id);

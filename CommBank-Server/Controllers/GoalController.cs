@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CommBank.Services;
 using CommBank.Models;
+using MongoDB.Driver;
 
 namespace CommBank.Controllers;
 
@@ -69,7 +70,7 @@ public class GoalController : ControllerBase
     }
 
     [HttpPut("{id:length(24)}")]
-    public async Task<IActionResult> Update(string id, Goal updatedGoal)
+    public async Task<IActionResult> UpdateIcon(string id, [FromBody] UpdateIconRequest request)
     {
         var goal = await _goalsService.GetAsync(id);
 
@@ -78,9 +79,9 @@ public class GoalController : ControllerBase
             return NotFound();
         }
 
-        updatedGoal.Id = goal.Id;
-
-        await _goalsService.UpdateAsync(id, updatedGoal);
+        // Build the update definition to only update the icon field
+        var updateDefinition = Builders<Goal>.Update.Set(g => g.Icon, request.Icon);
+        await _goalsService.UpdateAsync(id, updateDefinition);
 
         return NoContent();
     }
@@ -99,4 +100,9 @@ public class GoalController : ControllerBase
 
         return NoContent();
     }
+}
+
+public class UpdateIconRequest
+{
+    public string? Icon { get; set; }
 }

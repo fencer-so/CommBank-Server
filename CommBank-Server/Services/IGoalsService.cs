@@ -1,4 +1,5 @@
 ﻿using CommBank.Models;
+using MongoDB.Driver;
 
 namespace CommBank.Services
 {
@@ -9,6 +10,8 @@ namespace CommBank.Services
         Task<List<Goal>?> GetForUserAsync(string id);
         Task<Goal?> GetAsync(string id);
         Task RemoveAsync(string id);
-        Task UpdateAsync(string id, Goal updatedGoal);
+        
+        // Updated method signature to support partial updates
+        Task UpdateAsync(string id, UpdateDefinition<Goal> updateDefinition);
     }
 }
