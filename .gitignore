@@ -404,4 +404,7 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
+#Secrets file with mongo password
+Secrets.json
+
 
