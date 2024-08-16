@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "68b16f52-3532-4ec2-bf93-d9b0bfa3c527",
+		"name": "zww",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24063940"
+	},
+	"item": [
+		{
+			"name": "http://localhost:5203/api/Goal/62a3f587102e921da1253d32",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5203/api/Goal/62a3f587102e921da1253d32",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5203",
+					"path": [
+						"api",
+						"Goal",
+						"62a3f587102e921da1253d32"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5203/api/Goal/62a3f587102e921da1253d32",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"62a3f587102e921da1253d32\",\r\n  \"name\": \"House Down Payment\",\r\n  \"targetAmount\": 100000,\r\n  \"targetDate\": \"2025-01-08T05:00:00Z\",\r\n  \"balance\": 73501.82,\r\n  \"created\": \"2022-06-11T01:53:10.857Z\",\r\n  \"transactionIds\": null,\r\n  \"tagIds\": null,\r\n  \"icon\": \"🤺\",\r\n  \"userId\": \"62a29c15f4605c4c9fa7f306\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5203/api/Goal/62a3f587102e921da1253d32",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5203",
+					"path": [
+						"api",
+						"Goal",
+						"62a3f587102e921da1253d32"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
