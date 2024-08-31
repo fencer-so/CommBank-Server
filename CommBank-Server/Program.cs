@@ -1,6 +1,7 @@
 ﻿using CommBank.Models;
 using CommBank.Services;
 using MongoDB.Driver;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,21 @@ builder.Services.AddSwaggerGen();
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
 var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
-var mongoDatabase = mongoClient.GetDatabase("CommBank");
+var mongoDatabase = mongoClient.GetDatabase("CommonBankData");
+
+try
+{
+    // Test the connection by listing the databases
+    var databaseList = mongoClient.ListDatabases().ToList();
+    Console.WriteLine("Successfully connected to MongoDB. Databases available:");
+    databaseList.ForEach(db => Console.WriteLine($"- {db["name"]}"));
+}
+catch (Exception ex)
+{
+    Console.WriteLine("Failed to connect to MongoDB:");
+    Console.WriteLine(ex.Message);
+    throw; // Re-throw the exception to halt the application startup
+}
 
 IAccountsService accountsService = new AccountsService(mongoDatabase);
 IAuthService authService = new AuthService(mongoDatabase);
@@ -50,4 +65,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
