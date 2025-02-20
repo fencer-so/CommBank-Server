@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CommBank.Services;
 using CommBank.Models;
+using MongoDB.Bson;
+using MongoDB.Driver;
+
 
 namespace CommBank.Controllers;
 
@@ -17,10 +20,11 @@ public class GoalController : ControllerBase
         _usersService = usersService;
     }
 
-    [HttpGet]
-    public async Task<List<Goal>> Get() =>
-        await _goalsService.GetAsync();
 
+[HttpGet]
+public async Task<List<Goal>> Get() =>
+        await _goalsService.GetAsync();
+  
     [HttpGet("{id:length(24)}")]
     public async Task<ActionResult<Goal>> Get(string id)
     {
@@ -80,9 +84,11 @@ public class GoalController : ControllerBase
 
         updatedGoal.Id = goal.Id;
 
-        await _goalsService.UpdateAsync(id, updatedGoal);
+        goal.Icon = updatedGoal.Icon;
 
-        return NoContent();
+        await _goalsService.UpdateAsync(id, goal);
+
+        return Ok(goal);
     }
 
     [HttpDelete("{id:length(24)}")]
@@ -99,4 +105,6 @@ public class GoalController : ControllerBase
 
         return NoContent();
     }
+
+   
 }
