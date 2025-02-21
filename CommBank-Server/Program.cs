@@ -12,7 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
 var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
-var mongoDatabase = mongoClient.GetDatabase("CommBank");
+var databaseName = builder.Configuration["DatabaseSettings:DatabaseName"];
+var mongoDatabase = mongoClient.GetDatabase(databaseName);
 
 IAccountsService accountsService = new AccountsService(mongoDatabase);
 IAuthService authService = new AuthService(mongoDatabase);
@@ -28,10 +29,7 @@ builder.Services.AddSingleton(tagsService);
 builder.Services.AddSingleton(transactionsService);
 builder.Services.AddSingleton(usersService);
 
-builder.Services.AddCors();
-
 var app = builder.Build();
-
 app.UseCors(builder => builder
    .AllowAnyOrigin()
    .AllowAnyMethod()
