@@ -3,6 +3,7 @@ using CommBank.Services;
 using CommBank.Models;
 using CommBank.Tests.Fake;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace CommBank.Tests;
 
@@ -66,9 +67,30 @@ public class GoalControllerTests
     public async void GetForUser()
     {
         // Arrange
-        
+        var goals = collections.GetGoals();
+        var users = collections.GetUsers();
+
+        var userId = goals[0].UserId!;
+
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+
+        GoalController controller = new(goalsService, usersService);    
+
+        var httpContext = new DefaultHttpContext();
+        controller.ControllerContext.HttpContext = httpContext;
+
         // Act
-        
+        var result = await controller.GetForUser(userId);
+
         // Assert
+        Assert.NotNull(result);
+        Assert.NotEmpty(result);
+
+        foreach (var goal in result)
+        {
+            Assert.IsAssignableFrom<Goal>(goal);
+            Assert.Equal(userId, goal.UserId);
+        }
     }
 }
