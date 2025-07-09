@@ -27,4 +27,6 @@ public class Goal
 
     [BsonRepresentation(BsonType.ObjectId)]
     public string? UserId { get; set; }
+    // Task 1-7: Add Icon to Goal
+    public string? Icon { get; set; }
 }
