@@ -11,6 +11,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
+//Retrieves the database "CommBank"
+//Retrieves the mongo client "CommBank"
+
+/*
+Mongo collection names:
+Accounts, Tags, Goals, Users, Transactions
+*/
 var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
 var mongoDatabase = mongoClient.GetDatabase("CommBank");
 

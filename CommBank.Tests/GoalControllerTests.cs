@@ -41,6 +41,7 @@ public class GoalControllerTests
         }
     }
 
+    // a test that should run with no input (from xUnit).
     [Fact]
     public async void Get()
     {
@@ -62,13 +63,41 @@ public class GoalControllerTests
         Assert.NotEqual(goals[1], result.Value);
     }
 
-    [Fact]
+    [Fact] // a test that should run with no input (from xUnit).
     public async void GetForUser()
     {
-        // Arrange
+        /*
+        Arrange: Here, we set up the tests
+        -get fake goals and users
+        -Creates fake services (FakeGoalsService, FakeUsersService) which
+        implement interfaces the controller expects.
+        -Instantiates the GoalController with those fake services
+        */
+        var goals = collections.GetGoals()
+        var users = collections.GetUsers()
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+        GoalController controller = new(goalsService, usersService);     
         
-        // Act
+        /*
+        Act
+        -Manually set up an HTTP context for the controller
+        (so it's not null when running outside of a real request).
+        -Calls the method GetForUser with the UserId of the first goal.
+        */
+        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
+        controller.ControllerContext.HttpContext = httpContext;
+        var result = await controller.GetForUser(goals[0].UserId!);
         
         // Assert
+        Assert.NotNull(result);
+
+        var index = 0;
+        foreach (Goal goal in result!)
+        {
+            Assert.IsAssignableFrom<Goal>(goal);
+            Assert.Equal(goals[0].UserId, goal.UserId);
+            index++;
+        }
     }
 }
