@@ -11,6 +11,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>(optional: true);
+}
 var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
 var mongoDatabase = mongoClient.GetDatabase("CommBank");
 
@@ -39,6 +43,7 @@ app.UseCors(builder => builder
 
 if (app.Environment.IsDevelopment())
 {
+    builder.Configuration.AddUserSecrets<Program>(optional: true);
     app.UseSwagger();
     app.UseSwaggerUI();
 }

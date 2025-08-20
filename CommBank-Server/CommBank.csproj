@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>CommBank_Server</RootNamespace>
     <AssemblyName>CommBank-Server</AssemblyName>
+    <UserSecretsId>1265aca3-085b-4e3c-9938-516dc275d447</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
