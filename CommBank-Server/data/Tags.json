@@ -1,0 +1,26 @@
+[{
+  "_id": {
+    "$oid": "62a39d27025ca1ba8f1f1c1e"
+  },
+  "Name": "Groceries"
+},{
+  "_id": {
+    "$oid": "62a39d42025ca1ba8f1f1c1f"
+  },
+  "Name": "Restaurant"
+},{
+  "_id": {
+    "$oid": "62a39d4e025ca1ba8f1f1c20"
+  },
+  "Name": "Income"
+},{
+  "_id": {
+    "$oid": "62a39d5a025ca1ba8f1f1c21"
+  },
+  "Name": "Gas"
+},{
+  "_id": {
+    "$oid": "62a39d63025ca1ba8f1f1c22"
+  },
+  "Name": "Investment"
+}]
