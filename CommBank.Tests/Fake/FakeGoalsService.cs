@@ -19,7 +19,7 @@ public class FakeGoalsService : IGoalsService
         await Task.FromResult(_goals);
 
     public async Task<List<Goal>?> GetForUserAsync(string id) =>
-        await Task.FromResult(_goals);
+        await Task.FromResult(_goals.Where(g => g.UserId == id).ToList());
 
     public async Task<Goal?> GetAsync(string id) =>
         await Task.FromResult(_goal);
