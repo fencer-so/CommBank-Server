@@ -11,8 +11,17 @@ builder.Services.AddSwaggerGen();
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
-var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
-var mongoDatabase = mongoClient.GetDatabase("CommBank");
+// Get Configuration Settings
+var dbSettings = builder.Configuration.GetSection("DatabaseSettings");
+var connectionString = dbSettings.GetValue<string>("ConnectionString");
+var databaseName = dbSettings.GetValue<string>("DatabaseName");
+
+// Create MongoDB Client and Database Objects
+var mongoClient = new MongoClient(connectionString);
+var mongoDatabase = mongoClient.GetDatabase(databaseName);
+
+// Add Services to the container.
+builder.Services.AddSingleton(mongoDatabase);
 
 IAccountsService accountsService = new AccountsService(mongoDatabase);
 IAuthService authService = new AuthService(mongoDatabase);
@@ -43,7 +52,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
