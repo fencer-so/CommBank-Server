@@ -66,9 +66,28 @@ public class GoalControllerTests
     public async void GetForUser()
     {
         // Arrange
-        
+        var goals = collections.GetGoals();
+        var users = collections.GetUsers();
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+        GoalController controller = new(goalsService, usersService);
+
+        // Define which user we are testing for
+        var targetUser = users[0];
+        // Find all the goals that belong to our target user from the source data
+        var expectedGoals = goals.Where(g => g.UserId == targetUser.Id).ToList();
+
         // Act
-        
+        // Call the controller method to get goals for our target user
+        var result = await controller.GetForUser(targetUser.Id!);
+
         // Assert
+        // Convert the result to a list for easier assertions
+        var actualGoals = result.ToList();
+        
+        // Check if the number of returned goals is what we expected
+        Assert.Equal(expectedGoals.Count, actualGoals.Count);
+        // Check that every goal in the returned list actually belongs to the target user
+        Assert.All(actualGoals, goal => Assert.Equal(targetUser.Id, goal.UserId));
     }
 }
