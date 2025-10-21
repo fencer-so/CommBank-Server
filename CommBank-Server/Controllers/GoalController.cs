@@ -78,7 +78,16 @@ public class GoalController : ControllerBase
             return NotFound();
         }
 
+        // Preserve existing values, only update what was provided
         updatedGoal.Id = goal.Id;
+        updatedGoal.Name ??= goal.Name;
+        updatedGoal.TargetAmount = updatedGoal.TargetAmount == 0 ? goal.TargetAmount : updatedGoal.TargetAmount;
+        updatedGoal.TargetDate = updatedGoal.TargetDate == default ? goal.TargetDate : updatedGoal.TargetDate;
+        updatedGoal.Balance = updatedGoal.Balance == 0 ? goal.Balance : updatedGoal.Balance;
+        updatedGoal.Created = goal.Created;
+        updatedGoal.TransactionIds ??= goal.TransactionIds;
+        updatedGoal.TagIds ??= goal.TagIds;
+        updatedGoal.UserId ??= goal.UserId;
 
         await _goalsService.UpdateAsync(id, updatedGoal);
 
