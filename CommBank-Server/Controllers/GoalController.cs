@@ -99,4 +99,34 @@ public class GoalController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpPost("{id:length(24)}/icon")]
+    public async Task<IActionResult> UpdateIcon(string id, UpdatedIcon updatedIcon)
+    {
+        var goal = await _goalsService.GetAsync(id);
+
+        if (goal is null)
+        {
+            return NotFound();
+        }
+
+        goal.Icon = updatedIcon.Icon;
+
+        await _goalsService.UpdateAsync(id, goal);
+
+        return Ok(goal);
+    }
+
+    [HttpGet("{id:length(24)}/icon")]
+    public async Task<IActionResult> GetIcon(string id)
+    {
+        var goal = await _goalsService.GetAsync(id);
+
+        if (goal is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(new { icon = goal.Icon });
+    }
 }
