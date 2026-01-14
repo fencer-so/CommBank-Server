@@ -1,0 +1,56 @@
+### Health Check
+GET http://localhost:11366/health
+
+### Get All Goals (should be empty initially)
+GET http://localhost:11366/api/Goal
+Accept: application/json
+
+### Get All Accounts
+GET http://localhost:11366/api/Account
+Accept: application/json
+
+### Get All Users
+GET http://localhost:11366/api/User
+Accept: application/json
+
+### Get All Transactions
+GET http://localhost:11366/api/Transaction
+Accept: application/json
+
+### Get All Tags
+GET http://localhost:11366/api/Tag
+Accept: application/json
+
+### Create a new User
+POST http://localhost:11366/api/User
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "TestPassword123"
+}
+
+### Create a new Goal (you'll need a valid userId from the step above)
+POST http://localhost:11366/api/Goal
+Content-Type: application/json
+
+{
+  "name": "Save Money",
+  "targetAmount": 5000,
+  "currentAmount": 0,
+  "userId": "696772c9be66d4f22d7e4d77"
+}
+
+### adding icon to Goal (you'll need a valid goalId from the step above)
+POST http://localhost:11366/api/Goal/696772f9be66d4f22d7e4d78/icon
+Content-Type: application/json
+
+{
+  "icon": "😡"
+}
+
+###
+### Get All Goals (should be empty initially)
+GET http://localhost:11366/api/Goal/696772f9be66d4f22d7e4d78/icon
+Accept: application/json
