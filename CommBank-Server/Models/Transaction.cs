@@ -16,7 +16,7 @@ public class Transaction
 
     public double Amount { get; set; } = 0.00;
 
-    public DateTime DateTime { get; set; } = DateTime.Now;
+    public DateTime DateTime { get; set; } = DateTime.UtcNow;
 
     [BsonRepresentation(BsonType.ObjectId)]
     public string? GoalId { get; set; }
