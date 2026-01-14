@@ -2,7 +2,7 @@
 using MongoDB.Driver;
 using MongoDB.Bson;
 
-const string connectionUri = "mongodb+srv://Almansoor:qXoN6uEKIEyENSKG@cluster0.jja3hhp.mongodb.net/?appName=Cluster0";
+const string connectionUri = "mongodb+srv://username:password@cluster0.jja3hhp.mongodb.net/?appName=Cluster0";
 
 var settings = MongoClientSettings.FromConnectionString(connectionUri);
 
