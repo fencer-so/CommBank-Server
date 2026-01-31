@@ -1,19 +1,37 @@
 ﻿using CommBank.Models;
 using CommBank.Services;
 using MongoDB.Driver;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+// Load .env file ONCE
+Env.Load();
 
+// Add environment variables to configuration
+builder.Configuration.AddEnvironmentVariables();
+
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
+// Optional: Keep Secrets.json for fallback
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
+                     .AddJsonFile("Secrets.json", optional: true);
 
-var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
-var mongoDatabase = mongoClient.GetDatabase("CommBank");
+// Get connection string (priority: env var -> Secrets.json -> appsettings.json)
+var connectionString = Environment.GetEnvironmentVariable("MONGODB_URI") 
+    ?? builder.Configuration.GetConnectionString("CommBank");
 
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("MongoDB connection string is not configured. Set MONGODB_URI environment variable.");
+}
+
+var mongoClient = new MongoClient(connectionString);
+var mongoDatabase = mongoClient.GetDatabase("commbank");  // FIXED: Use actual database name
+
+// Register services
 IAccountsService accountsService = new AccountsService(mongoDatabase);
 IAuthService authService = new AuthService(mongoDatabase);
 IGoalsService goalsService = new GoalsService(mongoDatabase);
@@ -44,10 +62,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
-
