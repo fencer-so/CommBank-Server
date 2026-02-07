@@ -10,7 +10,7 @@ public class TransactionsService : ITransactionsService
 
     public TransactionsService(IMongoDatabase mongoDatabase)
     {
-        _transactionsCollection = mongoDatabase.GetCollection<Transaction>("Transactions");
+        _transactionsCollection = mongoDatabase.GetCollection<Transaction>("Transaction");
     }
 
     public async Task<List<Transaction>> GetAsync() =>

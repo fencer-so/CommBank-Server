@@ -10,7 +10,7 @@ public class AuthService : IAuthService
 
     public AuthService(IMongoDatabase mongoDatabase)
     {
-        _usersCollection = mongoDatabase.GetCollection<User>("Users");
+        _usersCollection = mongoDatabase.GetCollection<User>("User");
     }
 
     public async Task<User?> Login(string email, string password)

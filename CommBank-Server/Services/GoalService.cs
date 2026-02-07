@@ -9,7 +9,7 @@ public class GoalsService : IGoalsService
 
     public GoalsService(IMongoDatabase mongoDatabase)
     {
-        _goalsCollection = mongoDatabase.GetCollection<Goal>("Goals");
+        _goalsCollection = mongoDatabase.GetCollection<Goal>("Goal");
     }
 
     public async Task<List<Goal>> GetAsync() =>

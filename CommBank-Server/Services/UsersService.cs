@@ -10,7 +10,7 @@ public class UsersService : IUsersService
 
     public UsersService(IMongoDatabase mongoDatabase)
     {
-        _usersCollection = mongoDatabase.GetCollection<User>("Users");
+        _usersCollection = mongoDatabase.GetCollection<User>("User");
     }
 
     public async Task<List<User>> GetAsync() =>

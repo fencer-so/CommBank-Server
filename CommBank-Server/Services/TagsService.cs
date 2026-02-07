@@ -10,7 +10,7 @@ public class TagsService : ITagsService
 
     public TagsService(IMongoDatabase mongoDatabase)
     {
-        _tagsCollection = mongoDatabase.GetCollection<Models.Tag>("Tags");
+        _tagsCollection = mongoDatabase.GetCollection<Models.Tag>("Tag");
     }
 
     public async Task<List<Models.Tag>> GetAsync() =>
