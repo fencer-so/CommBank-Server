@@ -11,8 +11,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
-var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
-var mongoDatabase = mongoClient.GetDatabase("CommBank");
+var connectionString = builder.Configuration.GetConnectionString("CommBank");
+var settings = MongoClientSettings.FromConnectionString(connectionString);
+settings.SslSettings = new SslSettings { EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12 };
+var mongoClient = new MongoClient(settings);
+var mongoDatabase = mongoClient.GetDatabase("commonbank");
 
 IAccountsService accountsService = new AccountsService(mongoDatabase);
 IAuthService authService = new AuthService(mongoDatabase);

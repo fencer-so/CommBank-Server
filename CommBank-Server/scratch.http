@@ -1,0 +1,14 @@
+### GET
+GET http://localhost:5203/api/Goal/62a3f587102e921da1253d32
+
+### PUT
+PUT http://localhost:5203/api/Goal/62a3f587102e921da1253d32
+Content-Type: application/json
+
+{
+  "name": "House Down Payment",
+  "targetAmount": 20000,
+  "balance": 80000,
+  "userId": "62a29c15f4605c4c9fa7f306",
+  "icon": "🤺"
+}
