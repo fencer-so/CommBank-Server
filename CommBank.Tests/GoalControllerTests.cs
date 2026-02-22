@@ -1,4 +1,8 @@
-﻿using CommBank.Controllers;
+﻿using Xunit;
+using Moq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CommBank.Controllers;
 using CommBank.Services;
 using CommBank.Models;
 using CommBank.Tests.Fake;
@@ -61,14 +65,41 @@ public class GoalControllerTests
         Assert.Equal(goals[0], result.Value);
         Assert.NotEqual(goals[1], result.Value);
     }
-
+    
     [Fact]
-    public async void GetForUser()
+    public async Task GetForUser_ReturnsGoals_ForValidUser()
     {
         // Arrange
-        
+        var userId = "507f1f77bcf86cd799439011";
+
+        var mockGoalsService = new Mock<IGoalsService>();
+        var mockUsersService = new Mock<IUsersService>();
+
+        var expectedGoals = new List<Goal>
+        {
+            new Goal
+            {
+                Id = "507f1f77bcf86cd799439012",
+                UserId = userId,
+                Name = "Test Goal"
+            }
+        };
+
+        mockGoalsService
+            .Setup(service => service.GetForUserAsync(userId))
+            .ReturnsAsync(expectedGoals);
+
+        var controller = new GoalController(
+            mockGoalsService.Object,
+            mockUsersService.Object
+        );
+
         // Act
-        
+        var result = await controller.GetForUser(userId);
+
         // Assert
+        Assert.NotNull(result);
+        Assert.Single(result);
+        Assert.Equal("Test Goal", result[0].Name);
     }
 }
