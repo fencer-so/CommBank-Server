@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>CommBank_Server</RootNamespace>
     <AssemblyName>CommBank-Server</AssemblyName>
+    <UserSecretsId>1b71bddd-026e-4453-be5f-2a6c98a64c48</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
