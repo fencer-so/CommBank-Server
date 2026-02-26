@@ -12,7 +12,7 @@ public class Goal
     public string? Name { get; set; }
 
     public UInt64 TargetAmount { get; set; } = 0;
-
+    public string? Icon { get; set; }
     public DateTime TargetDate { get; set; }
 
     public double Balance { get; set; } = 0.00;
