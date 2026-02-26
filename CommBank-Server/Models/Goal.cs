@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace CommBank.Models;
@@ -18,6 +18,8 @@ public class Goal
     public double Balance { get; set; } = 0.00;
 
     public DateTime Created { get; set; } = DateTime.Now;
+
+    public string? Icon { get; set; }
 
     [BsonRepresentation(BsonType.ObjectId)]
     public List<string>? TransactionIds { get; set; }

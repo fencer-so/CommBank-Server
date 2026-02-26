@@ -1,0 +1,12 @@
+Task 5: Pull Request submission
+
+Paste your pull request URL below (after you create the PR on GitHub):
+
+Pull Request URL: 
+
+Instructions:
+1. Fork https://github.com/fencer-so/commbank-server to your GitHub account (if not already).
+2. Add your fork as a remote and push: see TASK5_INSTRUCTIONS.md.
+3. On GitHub, create a Pull Request from your fork's branch "feature/goal-manager" to fencer-so/commbank-server main.
+4. Use the description in docs/PULL_REQUEST_DESCRIPTION.md for the PR body.
+5. Copy the PR link here and upload this file for submission.

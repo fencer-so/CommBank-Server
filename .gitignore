@@ -404,4 +404,8 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
+# Local secrets (connection strings) - do not commit
+CommBank-Server/Secrets.json
+Secrets.json
+
 
