@@ -63,12 +63,44 @@ public class GoalControllerTests
     }
 
     [Fact]
-    public async void GetForUser()
+    public async Task GetForUser_ReturnsGoalsForCorrectUser()
     {
         // Arrange
-        
+        var userId = "1";
+
+        var goals = new List<Goal>
+        {
+            new Goal
+            {
+                Id = "1",
+                UserId = userId,
+                Name = "Car",
+                TargetAmount = 5000,
+                Icon = "🚗"
+            },
+            new Goal
+            {
+                Id = "2",
+                UserId = userId,
+                Name = "House",
+                TargetAmount = 10000,
+                Icon = "🏠"
+            }
+        };
+
+        var users = collections.GetUsers();
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+        GoalController controller = new(goalsService, usersService);
+
         // Act
-        
+        var result = await controller.GetForUser(userId);
+
         // Assert
+        Assert.NotNull(result);
+        Assert.IsAssignableFrom<IEnumerable<Goal>>(result);
+        Assert.Equal(2, result!.Count());
+        Assert.All(result!, g => Assert.Equal(userId, g.UserId));
+        Assert.All(result!, g => Assert.NotNull(g.Icon));
     }
 }
