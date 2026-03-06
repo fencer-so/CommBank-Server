@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using CommBank.Models;
 using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace CommBank.Services;
 
@@ -19,8 +20,15 @@ public class AccountsService : IAccountsService
     public async Task<Account?> GetAsync(string id) =>
         await _accountsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-    public async Task CreateAsync(Account newAccount) =>
+    public async Task CreateAsync(Account newAccount)
+    {
+        if (string.IsNullOrWhiteSpace(newAccount.Id) || !ObjectId.TryParse(newAccount.Id, out _))
+        {
+            newAccount.Id = ObjectId.GenerateNewId().ToString();
+        }
+
         await _accountsCollection.InsertOneAsync(newAccount);
+    }
 
     public async Task UpdateAsync(string id, Account updatedAccount) =>
         await _accountsCollection.ReplaceOneAsync(x => x.Id == id, updatedAccount);

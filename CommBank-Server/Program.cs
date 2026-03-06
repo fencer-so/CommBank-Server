@@ -1,17 +1,37 @@
-﻿using CommBank.Models;
+using System.Text.Json.Serialization;
+using CommBank.Models;
 using CommBank.Services;
 using MongoDB.Driver;
 
+// Prefer TLS 1.2 for MongoDB Atlas (helps avoid "TLS alert: InternalError" on Windows)
+System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(System.Text.Json.JsonNamingPolicy.CamelCase, allowIntegerValues: false));
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
-var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
+var connectionString = builder.Configuration.GetConnectionString("CommBank");
+var mongoClientSettings = MongoClientSettings.FromConnectionString(connectionString);
+mongoClientSettings.ServerSelectionTimeout = TimeSpan.FromSeconds(60);
+// On Windows, OCSP revocation check can cause TLS "InternalError" handshake failure with Atlas
+var ssl = mongoClientSettings.SslSettings ?? new SslSettings();
+ssl.CheckCertificateRevocation = false;
+mongoClientSettings.SslSettings = ssl;
+// Development-only: relax TLS cert validation if Windows still fails (remove in production)
+if (builder.Environment.IsDevelopment())
+{
+    mongoClientSettings.AllowInsecureTls = true;
+}
+var mongoClient = new MongoClient(mongoClientSettings);
 var mongoDatabase = mongoClient.GetDatabase("CommBank");
 
 IAccountsService accountsService = new AccountsService(mongoDatabase);
