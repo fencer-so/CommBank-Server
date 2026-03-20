@@ -29,12 +29,13 @@ namespace CommBank.Tests.Fake
             };
 
             goals = new()
-            {
-                new()
-                {
-                    Id = "1",
-                    Name = "House Down Payment"
-                },
+{
+    new()
+    {
+        Id = "1",
+        Name = "House Down Payment",
+        UserId = "1"
+    },
 
                 new()
                 {
