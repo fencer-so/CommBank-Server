@@ -1,0 +1,139 @@
+From dab81de70874fb21eeac667b3c2681957fcd2203 Mon Sep 17 00:00:00 2001
+From: Gokulsiva-web <gokulsivamaharaja@gmail.com>
+Date: Sun, 22 Mar 2026 14:28:27 +0530
+Subject: [PATCH] Added Icon field to Goal model
+
+---
+ CommBank-Server/Models/Goal.cs          |  3 ++
+ CommBank-Server/Program.cs              |  2 +-
+ CommBank-Server/Secrets.json            |  4 +-
+ CommBank-Server/Services/GoalService.cs | 54 ++++++++++++++++++++-----
+ CommBank-Server/appsettings.json        |  1 -
+ 5 files changed, 51 insertions(+), 13 deletions(-)
+
+diff --git a/CommBank-Server/Models/Goal.cs b/CommBank-Server/Models/Goal.cs
+index 77ff1ad..51eccf5 100644
+--- a/CommBank-Server/Models/Goal.cs
++++ b/CommBank-Server/Models/Goal.cs
+@@ -27,4 +27,7 @@ public class Goal
+ 
+     [BsonRepresentation(BsonType.ObjectId)]
+     public string? UserId { get; set; }
++
++        public string? Icon { get; set; }
++
+ }
+\ No newline at end of file
+diff --git a/CommBank-Server/Program.cs b/CommBank-Server/Program.cs
+index a88e560..3d0ec92 100644
+--- a/CommBank-Server/Program.cs
++++ b/CommBank-Server/Program.cs
+@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
+ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
+ 
+ var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
+-var mongoDatabase = mongoClient.GetDatabase("CommBank");
++var mongoDatabase = mongoClient.GetDatabase("rserver");
+ 
+ IAccountsService accountsService = new AccountsService(mongoDatabase);
+ IAuthService authService = new AuthService(mongoDatabase);
+diff --git a/CommBank-Server/Secrets.json b/CommBank-Server/Secrets.json
+index 0e5bf94..39f2213 100644
+--- a/CommBank-Server/Secrets.json
++++ b/CommBank-Server/Secrets.json
+@@ -1,5 +1,5 @@
+ ﻿{
+   "ConnectionStrings": {
+-    "CommBank": "{CONNECTION_STRING}"
++    "CommBank": "mongodb+srv://gokulsivamaharaja_db_user:vfIkrB8rBY4Q3dez@cluster0.zpue0um.mongodb.net/rserver?retryWrites=true&w=majority"
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/CommBank-Server/Services/GoalService.cs b/CommBank-Server/Services/GoalService.cs
+index b0c600a..717a3c8 100644
+--- a/CommBank-Server/Services/GoalService.cs
++++ b/CommBank-Server/Services/GoalService.cs
+@@ -9,24 +9,60 @@ public class GoalsService : IGoalsService
+ 
+     public GoalsService(IMongoDatabase mongoDatabase)
+     {
++        // 🔍 DEBUG: Print DB name
++        Console.WriteLine("DEBUG DB: " + mongoDatabase.DatabaseNamespace.DatabaseName);
++
++        // 🔍 DEBUG: Collection name
++        Console.WriteLine("DEBUG Collection: Goals");
++
+         _goalsCollection = mongoDatabase.GetCollection<Goal>("Goals");
+     }
+ 
+-    public async Task<List<Goal>> GetAsync() =>
+-        await _goalsCollection.Find(_ => true).ToListAsync();
++    public async Task<List<Goal>> GetAsync()
++    {
++        var goals = await _goalsCollection.Find(_ => true).ToListAsync();
+ 
+-    public async Task<List<Goal>?> GetForUserAsync(string id) =>
+-        await _goalsCollection.Find(x => x.UserId == id).ToListAsync();
++        // 🔍 DEBUG: Count of records
++        Console.WriteLine("DEBUG Goals count = " + goals.Count);
+ 
+-    public async Task<Goal?> GetAsync(string id) =>
+-        await _goalsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
++        // 🔍 DEBUG: Print each goal name
++        foreach (var goal in goals)
++        {
++            Console.WriteLine("DEBUG Goal: " + goal.Name);
++        }
++
++        return goals;
++    }
+ 
+-    public async Task CreateAsync(Goal newGoal) =>
++    public async Task<List<Goal>?> GetForUserAsync(string id)
++    {
++        var goals = await _goalsCollection.Find(x => x.UserId == id).ToListAsync();
++        Console.WriteLine("DEBUG GetForUser count = " + goals.Count);
++        return goals;
++    }
++
++    public async Task<Goal?> GetAsync(string id)
++    {
++        var goal = await _goalsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
++        Console.WriteLine("DEBUG Get by ID = " + (goal != null ? goal.Name : "NULL"));
++        return goal;
++    }
++
++    public async Task CreateAsync(Goal newGoal)
++    {
++        Console.WriteLine("DEBUG Creating goal: " + newGoal.Name);
+         await _goalsCollection.InsertOneAsync(newGoal);
++    }
+ 
+-    public async Task UpdateAsync(string id, Goal updatedGoal) =>
++    public async Task UpdateAsync(string id, Goal updatedGoal)
++    {
++        Console.WriteLine("DEBUG Updating goal: " + id);
+         await _goalsCollection.ReplaceOneAsync(x => x.Id == id, updatedGoal);
++    }
+ 
+-    public async Task RemoveAsync(string id) =>
++    public async Task RemoveAsync(string id)
++    {
++        Console.WriteLine("DEBUG Deleting goal: " + id);
+         await _goalsCollection.DeleteOneAsync(x => x.Id == id);
++    }
+ }
+\ No newline at end of file
+diff --git a/CommBank-Server/appsettings.json b/CommBank-Server/appsettings.json
+index af0538f..2230277 100644
+--- a/CommBank-Server/appsettings.json
++++ b/CommBank-Server/appsettings.json
+@@ -7,4 +7,3 @@
+   },
+   "AllowedHosts": "*"
+ }
+-
+-- 
+2.45.2.windows.1
+
