@@ -1,74 +1,65 @@
-﻿using CommBank.Controllers;
-using CommBank.Services;
-using CommBank.Models;
-using CommBank.Tests.Fake;
+﻿using Xunit;
+using Moq;
 using Microsoft.AspNetCore.Mvc;
+using CommBank.Controllers;
+using CommBank.Models;
+using CommBank.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace CommBank.Tests;
-
-public class GoalControllerTests
+namespace CommBank.Tests
 {
-    private readonly FakeCollections collections;
-
-    public GoalControllerTests()
+    public class GoalControllerTests
     {
-        collections = new();
-    }
+        private readonly Mock<IGoalsService> _mockGoalsService;
+        private readonly GoalController _controller;
 
-    [Fact]
-    public async void GetAll()
-    {
-        // Arrange
-        var goals = collections.GetGoals();
-        var users = collections.GetUsers();
-        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
-        IUsersService usersService = new FakeUsersService(users, users[0]);
-        GoalController controller = new(goalsService, usersService);
-
-        // Act
-        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
-        controller.ControllerContext.HttpContext = httpContext;
-        var result = await controller.Get();
-
-        // Assert
-        var index = 0;
-        foreach (Goal goal in result)
+        public GoalControllerTests()
         {
-            Assert.IsAssignableFrom<Goal>(goal);
-            Assert.Equal(goals[index].Id, goal.Id);
-            Assert.Equal(goals[index].Name, goal.Name);
-            index++;
+            // We "Mock" the service so we don't need a real database to run tests
+            _mockGoalsService = new Mock<IGoalsService>();
+            _controller = new GoalController(_mockGoalsService.Object);
         }
-    }
 
-    [Fact]
-    public async void Get()
-    {
-        // Arrange
-        var goals = collections.GetGoals();
-        var users = collections.GetUsers();
-        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
-        IUsersService usersService = new FakeUsersService(users, users[0]);
-        GoalController controller = new(goalsService, usersService);
+        [Fact]
+        public async Task GetGoalsForUser_ReturnsOkResult_WithListOfGoals()
+        {
+            // 1. ARRANGE
+            var userId = "test-user-123";
+            var fakeGoals = new List<Goal>
+            {
+                new Goal { Id = "1", Name = "Holiday", Icon = "✈️", UserId = userId },
+                new Goal { Id = "2", Name = "Savings", Icon = "💰", UserId = userId }
+            };
 
-        // Act
-        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
-        controller.ControllerContext.HttpContext = httpContext;
-        var result = await controller.Get(goals[0].Id!);
+            _mockGoalsService.Setup(service => service.GetGoalsForUser(userId))
+                             .ReturnsAsync(fakeGoals);
 
-        // Assert
-        Assert.IsAssignableFrom<Goal>(result.Value);
-        Assert.Equal(goals[0], result.Value);
-        Assert.NotEqual(goals[1], result.Value);
-    }
+            // 2. ACT
+            var result = await _controller.GetGoalsForUser(userId);
 
-    [Fact]
-    public async void GetForUser()
-    {
-        // Arrange
-        
-        // Act
-        
-        // Assert
+            // 3. ASSERT
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedGoals = Assert.IsType<List<Goal>>(okResult.Value);
+            Assert.Equal(2, returnedGoals.Count);
+            Assert.Equal("✈️", returnedGoals[0].Icon); // Verifying our new Icon field!
+        }
+
+        [Fact]
+        public async Task GetGoalsForUser_ReturnsEmptyList_WhenNoGoalsExist()
+        {
+            // ARRANGE
+            var userId = "empty-user";
+            _mockGoalsService.Setup(service => service.GetGoalsForUser(userId))
+                             .ReturnsAsync(new List<Goal>());
+
+            // ACT
+            var result = await _controller.GetGoalsForUser(userId);
+
+            // ASSERT
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedGoals = Assert.IsType<List<Goal>>(okResult.Value);
+            Assert.Empty(returnedGoals);
+        }
     }
 }
