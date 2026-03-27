@@ -4,38 +4,50 @@ using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+// Load configuration (Secrets.json)
+builder.Configuration.AddJsonFile("Secrets.json", optional: false, reloadOnChange: true);
 
+// Add controllers + Swagger
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
+// MongoDB configuration
+var connectionString = builder.Configuration.GetConnectionString("CommBank");
 
-var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
-var mongoDatabase = mongoClient.GetDatabase("CommBank");
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new Exception("MongoDB connection string is missing.");
+}
 
-IAccountsService accountsService = new AccountsService(mongoDatabase);
-IAuthService authService = new AuthService(mongoDatabase);
-IGoalsService goalsService = new GoalsService(mongoDatabase);
-ITagsService tagsService = new TagsService(mongoDatabase);
-ITransactionsService transactionsService = new TransactionsService(mongoDatabase);
-IUsersService usersService = new UsersService(mongoDatabase);
+// Register MongoDB client and database via DI
+builder.Services.AddSingleton<IMongoClient>(sp =>
+    new MongoClient(connectionString));
 
-builder.Services.AddSingleton(accountsService);
-builder.Services.AddSingleton(authService);
-builder.Services.AddSingleton(goalsService);
-builder.Services.AddSingleton(tagsService);
-builder.Services.AddSingleton(transactionsService);
-builder.Services.AddSingleton(usersService);
+builder.Services.AddSingleton(sp =>
+    sp.GetRequiredService<IMongoClient>().GetDatabase("commbank"));
 
-builder.Services.AddCors();
+// Register services (DI-friendly)
+builder.Services.AddScoped<IAccountsService, AccountsService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IGoalsService, GoalsService>();
+builder.Services.AddScoped<ITagsService, TagsService>();
+builder.Services.AddScoped<ITransactionsService, TransactionsService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
+
+// CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
+});
 
 var app = builder.Build();
 
-app.UseCors(builder => builder
-   .AllowAnyOrigin()
-   .AllowAnyMethod()
-   .AllowAnyHeader());
+// Middleware
+app.UseCors("AllowAll");
 
 if (app.Environment.IsDevelopment())
 {
@@ -50,4 +62,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
