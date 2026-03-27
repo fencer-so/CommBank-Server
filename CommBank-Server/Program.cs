@@ -1,5 +1,6 @@
 ﻿using CommBank.Models;
 using CommBank.Services;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,10 @@ builder.Services.AddSwaggerGen();
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
 var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
-var mongoDatabase = mongoClient.GetDatabase("CommBank");
+var mongoDatabase = mongoClient.GetDatabase("VBCluster1DB");
+
+await mongoDatabase.RunCommandAsync<BsonDocument>(new BsonDocument("ping", 1));
+Console.WriteLine("MongoDB connected successfully!");
 
 IAccountsService accountsService = new AccountsService(mongoDatabase);
 IAuthService authService = new AuthService(mongoDatabase);

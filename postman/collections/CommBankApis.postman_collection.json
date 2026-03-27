@@ -1,0 +1,53 @@
+{
+  "info": {
+    "_postman_id": "aa4b6d41-6be7-4523-8d41-89ac73d53f76",
+    "name": "CommBankApis",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "http://localhost:11366/api/Goal/",
+      "id": "f3efd1f2-2501-4872-8a8e-7297272a4960",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:11366/api/Goal/62a3f5e0102e921da1253d33",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "11366",
+          "path": [
+            "api",
+            "Goal",
+            "62a3f5e0102e921da1253d33"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:11366/api/Goal/",
+      "id": "2321a1c8-8412-4e2f-8ca5-82d9a2b7a2f0",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:11366/api/Goal/62a3f5e0102e921da1253d33",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "11366",
+          "path": [
+            "api",
+            "Goal",
+            "62a3f5e0102e921da1253d33"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

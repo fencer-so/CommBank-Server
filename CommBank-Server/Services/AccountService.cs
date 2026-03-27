@@ -10,7 +10,7 @@ public class AccountsService : IAccountsService
 
     public AccountsService(IMongoDatabase mongoDatabase)
     {
-        _accountsCollection = mongoDatabase.GetCollection<Account>("Accounts");
+        _accountsCollection = mongoDatabase.GetCollection<Account>("db_accounts");
     }
 
     public async Task<List<Account>> GetAsync() =>

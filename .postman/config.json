@@ -1,0 +1,14 @@
+{
+  "workspace": {
+    "id": "582d64bf-a140-434c-8010-4ac76d1b727c"
+  },
+  "entities": {
+    "collections": [],
+    "environments": [],
+    "specs": [
+      "..\\CommBank-Server\\obj\\Debug\\net6.0\\EndpointInfo\\CommBank.json"
+    ],
+    "flows": [],
+    "globals": []
+  }
+}
