@@ -49,5 +49,15 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Seed DB
+try 
+{
+    await DbSeeder.SeedAsync(mongoDatabase);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"[DB ERROR] Failed to seed database: {ex.Message}");
+}
+
 app.Run();
 
