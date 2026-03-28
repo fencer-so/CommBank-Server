@@ -1,0 +1,79 @@
+From 400ef8ad55797ca2987c8787e510af77047647ad Mon Sep 17 00:00:00 2001
+From: Aniket <aniket@example.com>
+Date: Sat, 28 Mar 2026 20:30:48 +0530
+Subject: [PATCH] Task 4: Added GetForUser unit test
+
+---
+ CommBank-Server/Models/Goal.cs        |  1 +
+ CommBank-Server/Secrets.json          |  2 +-
+ CommBank.Tests/GoalControllerTests.cs | 30 ++++++++++++++++++++++-----
+ 3 files changed, 27 insertions(+), 6 deletions(-)
+
+diff --git a/CommBank-Server/Models/Goal.cs b/CommBank-Server/Models/Goal.cs
+index 77ff1ad..9af7f54 100644
+--- a/CommBank-Server/Models/Goal.cs
++++ b/CommBank-Server/Models/Goal.cs
+@@ -10,6 +10,7 @@ public class Goal
+     public string? Id { get; set; }
+ 
+     public string? Name { get; set; }
++    public string? Icon { get; set; }
+ 
+     public UInt64 TargetAmount { get; set; } = 0;
+ 
+diff --git a/CommBank-Server/Secrets.json b/CommBank-Server/Secrets.json
+index 0e5bf94..3ee9766 100644
+--- a/CommBank-Server/Secrets.json
++++ b/CommBank-Server/Secrets.json
+@@ -1,5 +1,5 @@
+ ﻿{
+   "ConnectionStrings": {
+-    "CommBank": "{CONNECTION_STRING}"
++    "CommBank": "mongodb+srv://aniket_admin:Aniket2921@mean.buj0kgi.mongodb.net/CommBank?appName=Mean"
+   }
+ }
+\ No newline at end of file
+diff --git a/CommBank.Tests/GoalControllerTests.cs b/CommBank.Tests/GoalControllerTests.cs
+index 8380181..01797cc 100644
+--- a/CommBank.Tests/GoalControllerTests.cs
++++ b/CommBank.Tests/GoalControllerTests.cs
+@@ -65,10 +65,30 @@ public class GoalControllerTests
+     [Fact]
+     public async void GetForUser()
+     {
+-        // Arrange
+-        
+-        // Act
+-        
+-        // Assert
++        // Arrange: Testing ke liye data aur controller taiyaar karna
++        var goals = collections.GetGoals();
++        var users = collections.GetUsers();
++        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
++        IUsersService usersService = new FakeUsersService(users, users[0]);
++        GoalController controller = new(goalsService, usersService);
++
++        // Act: Actual API endpoint ko call karna
++        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
++        controller.ControllerContext.HttpContext = httpContext;
++        var result = await controller.GetForUser(users[0].Id!);
++
++        // Assert: Check karna ki response sahi hai ya nahi
++        var index = 0;
++        foreach (Goal goal in result)
++        {
++            Assert.IsAssignableFrom<Goal>(goal);
++            Assert.Equal(goals[index].Id, goal.Id);
++            Assert.Equal(goals[index].Name, goal.Name);
++            
++            // Task 4: Icon property ko cover karna zaroori hai
++            Assert.Equal(goals[index].Icon, goal.Icon); 
++            
++            index++;
++        }
+     }
+ }
+\ No newline at end of file
+-- 
+2.53.0.windows.2
+
