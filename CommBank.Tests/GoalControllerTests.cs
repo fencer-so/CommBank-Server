@@ -66,9 +66,23 @@ public class GoalControllerTests
     public async void GetForUser()
     {
         // Arrange
-        
+        var goals = collections.GetGoals();
+        var users = collections.GetUsers();
+        var targetUserId = users[0].Id!;
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+        GoalController controller = new(goalsService, usersService);
+
         // Act
-        
+        var result = await controller.GetForUser(targetUserId);
+
         // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result!.Count);
+        foreach (var goal in result)
+        {
+            Assert.Equal(targetUserId, goal.UserId);
+        }
     }
+
 }
