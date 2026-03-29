@@ -33,21 +33,25 @@ namespace CommBank.Tests.Fake
                 new()
                 {
                     Id = "1",
-                    Name = "House Down Payment"
+                    Name = "House Down Payment",
+                    UserId = "1"
                 },
 
                 new()
                 {
                     Id = "2",
-                    Name = "Tesla Model Y"
+                    Name = "Tesla Model Y",
+                    UserId = "2"
                 },
 
                 new()
                 {
                     Id = "3",
-                    Name = "Trip to London"
+                    Name = "Trip to London",
+                    UserId = "1"
                 },
             };
+
 
             tags = new()
             {
