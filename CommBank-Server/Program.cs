@@ -9,10 +9,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
-var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
-var mongoDatabase = mongoClient.GetDatabase("CommBank");
+
+
+var connectionString = builder.Configuration["MongoDbSettings:ConnectionString"];
+var mongoClient = new MongoClient(connectionString);
+var mongoDatabase = mongoClient.GetDatabase("rserver_dev");
 
 IAccountsService accountsService = new AccountsService(mongoDatabase);
 IAuthService authService = new AuthService(mongoDatabase);
