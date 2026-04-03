@@ -27,4 +27,7 @@ public class Goal
 
     [BsonRepresentation(BsonType.ObjectId)]
     public string? UserId { get; set; }
+
+    [BsonElement("icon")]
+    public string? Icon { get; set; }
 }
