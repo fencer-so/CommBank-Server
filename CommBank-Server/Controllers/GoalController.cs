@@ -37,6 +37,7 @@ public class GoalController : ControllerBase
     [HttpGet("User/{id:length(24)}")]
     public async Task<List<Goal>?> GetForUser(string id) =>
         await _goalsService.GetForUserAsync(id);
+    
 
     [HttpPost]
     public async Task<IActionResult> Post(Goal newGoal)
