@@ -11,6 +11,7 @@ public class Goal
 
     public string? Name { get; set; }
 
+    // Added Icon
     public string? Icon { get; set; }
 
     public UInt64 TargetAmount { get; set; } = 0;
