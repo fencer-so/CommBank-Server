@@ -11,22 +11,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
-var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
-var mongoDatabase = mongoClient.GetDatabase("CommBank");
+builder.Services.AddSingleton<IMongoClient>(sp => new MongoClient(builder.Configuration.GetConnectionString("CommBank")));
+builder.Services.AddScoped<IMongoDatabase>(sp => sp.GetRequiredService<IMongoClient>().GetDatabase(builder.Configuration.GetValue<string>("GoalDatabase:DatabaseName") ?? "CommBank"));
 
-IAccountsService accountsService = new AccountsService(mongoDatabase);
-IAuthService authService = new AuthService(mongoDatabase);
-IGoalsService goalsService = new GoalsService(mongoDatabase);
-ITagsService tagsService = new TagsService(mongoDatabase);
-ITransactionsService transactionsService = new TransactionsService(mongoDatabase);
-IUsersService usersService = new UsersService(mongoDatabase);
-
-builder.Services.AddSingleton(accountsService);
-builder.Services.AddSingleton(authService);
-builder.Services.AddSingleton(goalsService);
-builder.Services.AddSingleton(tagsService);
-builder.Services.AddSingleton(transactionsService);
-builder.Services.AddSingleton(usersService);
+builder.Services.AddScoped<IAccountsService, AccountsService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IGoalsService, GoalsService>();
+builder.Services.AddScoped<ITagsService, TagsService>();
+builder.Services.AddScoped<ITransactionsService, TransactionsService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
 
 builder.Services.AddCors();
 

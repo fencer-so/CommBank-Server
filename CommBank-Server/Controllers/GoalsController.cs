@@ -6,12 +6,12 @@ namespace CommBank.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class GoalController : ControllerBase
+public class GoalsController : ControllerBase
 {
     private readonly IGoalsService _goalsService;
     private readonly IUsersService _usersService;
 
-    public GoalController(IGoalsService goalsService, IUsersService usersService)
+    public GoalsController(IGoalsService goalsService, IUsersService usersService)
     {
         _goalsService = goalsService;
         _usersService = usersService;
