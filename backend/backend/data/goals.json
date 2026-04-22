@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Buy a Car",
+    "description": "Save money to buy a car",
+    "targetAmount": 500000,
+    "currentAmount": 150000,
+    "icon": "car"
+  },
+  {
+    "title": "Vacation",
+    "description": "Trip to Goa",
+    "targetAmount": 80000,
+    "currentAmount": 20000,
+    "icon": "beach"
+  },
+  {
+    "title": "Emergency Fund",
+    "description": "Backup savings",
+    "targetAmount": 100000,
+    "currentAmount": 40000,
+    "icon": "shield"
+  }
+]
