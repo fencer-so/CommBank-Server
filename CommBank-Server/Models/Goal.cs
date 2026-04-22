@@ -27,4 +27,6 @@ public class Goal
 
     [BsonRepresentation(BsonType.ObjectId)]
     public string? UserId { get; set; }
+    // Add new line:
+    public string? Icon { get; set; }
 }
