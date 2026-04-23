@@ -78,9 +78,16 @@ public class GoalController : ControllerBase
             return NotFound();
         }
 
-        updatedGoal.Id = goal.Id;
+        goal.Name = updatedGoal.Name ?? goal.Name;
+        goal.Icon = updatedGoal.Icon ?? goal.Icon;
+        goal.TargetAmount = updatedGoal.TargetAmount != 0 ? updatedGoal.TargetAmount : goal.TargetAmount;
+        goal.TargetDate = updatedGoal.TargetDate != default ? updatedGoal.TargetDate : goal.TargetDate;
+        goal.Balance = updatedGoal.Balance != 0 ? updatedGoal.Balance : goal.Balance;
+        goal.TransactionIds = updatedGoal.TransactionIds ?? goal.TransactionIds;
+        goal.TagIds = updatedGoal.TagIds ?? goal.TagIds;
+        goal.UserId = updatedGoal.UserId ?? goal.UserId;
 
-        await _goalsService.UpdateAsync(id, updatedGoal);
+        await _goalsService.UpdateAsync(id, goal);
 
         return NoContent();
     }

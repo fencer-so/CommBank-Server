@@ -1,0 +1,61 @@
+{
+    "0": {
+        "request": {
+            "method": "GET",
+            "url": "http://localhost:5203/api/Goal/62a61945fa15f1cd18516a5f"
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            "body": {
+                "id": "62a61945fa15f1cd18516a5f",
+                "name": "Trip to NYC",
+                "targetAmount": 800,
+                "targetDate": "2023-12-10T05:00:00Z",
+                "balance": 0,
+                "created": "2022-06-12T16:57:45.668Z",
+                "transactionIds": null,
+                "tagIds": null,
+                "userId": "62a29c15f4605c4c9fa7f306"
+            }
+        }
+    },
+    "1": {
+        "request": {
+            "method": "PUT",
+            "url": "http://localhost:5203/api/Goal",
+            "body": {
+                "icon": "🤺"
+            },
+            "headers": {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        }
+    },
+    "2": {
+        "request": {
+            "method": "GET",
+            "url": "http://localhost:5203/api/Goal/62a61945fa15f1cd18516a5f"
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            "body": {
+                "id": "62a61945fa15f1cd18516a5f",
+                "name": "Trip to NYC",
+                "icon": "🤺",
+                "targetAmount": 800,
+                "targetDate": "2023-12-10T05:00:00Z",
+                "balance": 0,
+                "created": "2022-06-12T16:57:45.668Z",
+                "transactionIds": null,
+                "tagIds": null,
+                "userId": "62a29c15f4605c4c9fa7f306"
+            }
+        }
+    }
+}
