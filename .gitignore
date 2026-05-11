@@ -16,7 +16,7 @@ test-results/
 *.app
 
 # content below from: https://github.com/github/gitignore/blob/main/Global/macOS.gitignore
-# General
+
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -403,5 +403,17 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+
+
+.env
+.env.local
+.env.*.local
+
+Secrets.json
+
+# Test/Mock Data Files
+getAll.json
+getId.json
+getId_withIcon.json
 
 
