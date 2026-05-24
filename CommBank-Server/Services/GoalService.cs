@@ -27,6 +27,14 @@ public class GoalsService : IGoalsService
     public async Task UpdateAsync(string id, Goal updatedGoal) =>
         await _goalsCollection.ReplaceOneAsync(x => x.Id == id, updatedGoal);
 
+    public async Task<bool> UpdateIconAsync(string id, string icon)
+    {
+        var update = Builders<Goal>.Update.Set(x => x.Icon, icon);
+        var result = await _goalsCollection.UpdateOneAsync(x => x.Id == id, update);
+
+        return result.MatchedCount > 0;
+    }
+
     public async Task RemoveAsync(string id) =>
         await _goalsCollection.DeleteOneAsync(x => x.Id == id);
 }
