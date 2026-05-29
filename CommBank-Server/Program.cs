@@ -9,10 +9,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
+// Explicitly reading from Secrets.json if it exists
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json", optional: true);
 
-var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
-var mongoDatabase = mongoClient.GetDatabase("CommBank");
+// Wiped out the failing GetConnectionString line and hardcoded your verified Atlas string
+string connectionString = "mongodb+srv://admin:ForageSE@clusterm0.xxxxx.mongodb.net/?retryWrites=true&w=majority";
+
+var mongoClient = new MongoClient(connectionString);                                                                                                                                               
+var mongoDatabase = mongoClient.GetDatabase("commbank"); // Matches your instructions database target
 
 IAccountsService accountsService = new AccountsService(mongoDatabase);
 IAuthService authService = new AuthService(mongoDatabase);
@@ -50,4 +54,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
