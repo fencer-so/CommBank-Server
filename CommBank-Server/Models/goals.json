@@ -1,0 +1,38 @@
+[
+  {
+    "id": "6a21984ecb0de54f56439894",
+    "name": "Save for Laptop",
+    "targetAmount": 1000,
+    "targetDate": "2026-12-31T00:00:00Z",
+    "balance": 0,
+    "created": "2026-06-04T15:22:54.583Z",
+    "transactionIds": [],
+    "tagIds": [],
+    "userId": null,
+    "icon": null
+  },
+  {
+    "id": "6a219853cb0de54f56439895",
+    "name": "Save for Laptop",
+    "targetAmount": 1000,
+    "targetDate": "2026-12-31T00:00:00Z",
+    "balance": 0,
+    "created": "2026-06-04T15:22:59.167Z",
+    "transactionIds": [],
+    "tagIds": [],
+    "userId": null,
+    "icon": null
+  },
+  {
+    "id": "6a2198aecb0de54f56439896",
+    "name": "Buy a Car",
+    "targetAmount": 5000,
+    "targetDate": "2027-06-01T00:00:00Z",
+    "balance": 0,
+    "created": "2026-06-04T15:24:30.349Z",
+    "transactionIds": [],
+    "tagIds": [],
+    "userId": null,
+    "icon": "🚗"
+  }
+]
