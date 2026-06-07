@@ -1,4 +1,5 @@
-﻿using CommBank.Controllers;
+﻿using Xunit;
+using CommBank.Controllers;
 using CommBank.Services;
 using CommBank.Models;
 using CommBank.Tests.Fake;
@@ -62,13 +63,36 @@ public class GoalControllerTests
         Assert.NotEqual(goals[1], result.Value);
     }
 
-    [Fact]
-    public async void GetForUser()
+  [Fact]
+public async void GetForUser()
+{
+    // Arrange
+    var goals = collections.GetGoals();
+    var users = collections.GetUsers();
+
+    IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+    IUsersService usersService = new FakeUsersService(users, users[0]);
+    GoalController controller = new(goalsService, usersService);
+
+    var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
+    controller.ControllerContext.HttpContext = httpContext;
+
+    var userId = users[0].Id!;
+
+    // Act
+    var result = await controller.GetForUser(userId);
+
+    // Assert
+    Assert.NotNull(result);
+
+    // result is likely List<Goal>? → safely handle null
+    var goalsForUser = result ?? new List<Goal>();
+
+    Assert.True(goalsForUser.Count > 0);
+
+    foreach (var goal in goalsForUser)
     {
-        // Arrange
-        
-        // Act
-        
-        // Assert
+        Assert.Equal(userId, goal.UserId);
     }
+}
 }

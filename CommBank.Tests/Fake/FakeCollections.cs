@@ -1,4 +1,5 @@
 ﻿using CommBank.Models;
+using System.Collections.Generic;
 
 namespace CommBank.Tests.Fake
 {
@@ -10,18 +11,17 @@ namespace CommBank.Tests.Fake
         List<Transaction> transactions;
         List<User> users;
 
-
         public FakeCollections()
         {
             accounts = new()
             {
-                new()
+                new Account
                 {
                     Id = "1",
                     Name = "Tag's GoalSaver"
                 },
 
-                new()
+                new Account
                 {
                     Id = "2",
                     Name = "Trot's GoalSaver"
@@ -29,67 +29,56 @@ namespace CommBank.Tests.Fake
             };
 
             goals = new()
-            {
-                new()
-                {
-                    Id = "1",
-                    Name = "House Down Payment"
-                },
+{
+    new Goal
+    {
+        Id = "1",
+        Name = "House Down Payment",
+        UserId = "1"
+    },
 
-                new()
-                {
-                    Id = "2",
-                    Name = "Tesla Model Y"
-                },
+    new Goal
+    {
+        Id = "2",
+        Name = "Tesla Model Y",
+        UserId = "1"
+    },
 
-                new()
-                {
-                    Id = "3",
-                    Name = "Trip to London"
-                },
-            };
+    new Goal
+    {
+        Id = "3",
+        Name = "Trip to London",
+        UserId = "2"
+    }
+};
 
             tags = new()
             {
-                new()
-                {
-                    Id = "1"
-                },
-
-                new()
-                {
-                    Id = "2"
-                }
+                new Tag { Id = "1" },
+                new Tag { Id = "2" }
             };
 
             transactions = new()
             {
-                new()
-                {
-                    Id = "1"
-                },
-
-                new()
-                {
-                    Id = "2"
-                }
+                new Transaction { Id = "1" },
+                new Transaction { Id = "2" }
             };
 
             users = new()
             {
-                new()
+                new User
                 {
                     Id = "1",
                     Name = "Tag"
                 },
 
-                new()
+                new User
                 {
                     Id = "2",
                     Name = "Trot"
                 },
 
-                new()
+                new User
                 {
                     Id = "3",
                     Name = "Tugg"
@@ -97,29 +86,10 @@ namespace CommBank.Tests.Fake
             };
         }
 
-        public List<Account> GetAccounts()
-        {
-            return accounts;
-        }
-
-        public List<Goal> GetGoals()
-        {
-            return goals;
-        }
-
-        public List<Tag> GetTags()
-        {
-            return tags;
-        }
-
-        public List<Transaction> GetTransactions()
-        {
-            return transactions;
-        }
-
-        public List<User> GetUsers()
-        {
-            return users;
-        }
+        public List<Account> GetAccounts() => accounts;
+        public List<Goal> GetGoals() => goals;
+        public List<Tag> GetTags() => tags;
+        public List<Transaction> GetTransactions() => transactions;
+        public List<User> GetUsers() => users;
     }
 }
