@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CommBank.csproj" />
+  <Project Path="CommBank.Tests/CommBank.Tests.csproj" />
+</Solution>
