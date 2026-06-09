@@ -4,6 +4,7 @@ using MongoDB.Driver;
 
 namespace CommBank.Services;
 
+<<<<<<< HEAD
 public class AuthService : IAuthService
 {
     private readonly IMongoCollection<User> _usersCollection;
@@ -12,6 +13,11 @@ public class AuthService : IAuthService
     {
         _usersCollection = mongoDatabase.GetCollection<User>("Users");
     }
+=======
+public class AuthService(IMongoDatabase mongoDatabase) : IAuthService
+{
+    private readonly IMongoCollection<User> _usersCollection = mongoDatabase.GetCollection<User>("Users");
+>>>>>>> 2bc1eb6 (Your commit message)
 
     public async Task<User?> Login(string email, string password)
     {

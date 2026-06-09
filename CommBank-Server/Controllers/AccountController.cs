@@ -6,12 +6,18 @@ namespace CommBank.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+<<<<<<< HEAD
 public class AccountController : ControllerBase
 {
     private readonly IAccountsService _accountsService;
 
     public AccountController(IAccountsService accountsService) =>
         _accountsService = accountsService;
+=======
+public class AccountController(IAccountsService accountsService) : ControllerBase
+{
+    private readonly IAccountsService _accountsService = accountsService;
+>>>>>>> 2bc1eb6 (Your commit message)
 
     [HttpGet]
     public async Task<List<Account>> Get() =>

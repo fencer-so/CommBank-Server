@@ -3,6 +3,7 @@ using CommBank.Services;
 
 namespace CommBank.Tests.Fake;
 
+<<<<<<< HEAD
 public class FakeTransactionsService : ITransactionsService
 {
     List<Transaction> _transactions;
@@ -13,6 +14,12 @@ public class FakeTransactionsService : ITransactionsService
         _transactions = transactions;
         _transaction = transaction;
     }
+=======
+public class FakeTransactionsService(List<Transaction> transactions, Transaction transaction) : ITransactionsService
+{
+    List<Transaction> _transactions = transactions;
+    Transaction _transaction = transaction;
+>>>>>>> 2bc1eb6 (Your commit message)
 
     public async Task<List<Transaction>> GetAsync() =>
         await Task.FromResult(_transactions);

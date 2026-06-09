@@ -4,6 +4,7 @@ using CommBank.Models;
 
 namespace CommBank.Controllers;
 
+<<<<<<< HEAD
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -12,6 +13,11 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
+=======
+public class HomeController(ILogger<HomeController> logger) : Controller
+{
+    private readonly ILogger<HomeController> _logger = logger;
+>>>>>>> 2bc1eb6 (Your commit message)
 
     public IActionResult Index()
     {

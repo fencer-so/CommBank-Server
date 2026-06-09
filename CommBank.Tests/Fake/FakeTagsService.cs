@@ -3,6 +3,7 @@ using CommBank.Services;
 
 namespace CommBank.Tests.Fake;
 
+<<<<<<< HEAD
 public class FakeTagsService : ITagsService
 {
     List<Tag> _tags;
@@ -13,6 +14,12 @@ public class FakeTagsService : ITagsService
         _tags = tags;
         _tag = tag;
     }
+=======
+public class FakeTagsService(List<Tag> tags, Tag tag) : ITagsService
+{
+    List<Tag> _tags = tags;
+    Tag _tag = tag;
+>>>>>>> 2bc1eb6 (Your commit message)
 
     public async Task<List<Tag>> GetAsync() =>
         await Task.FromResult(_tags);

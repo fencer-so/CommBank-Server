@@ -4,6 +4,7 @@ using CommBank.Services;
 
 namespace CommBank.Tests.Fake;
 
+<<<<<<< HEAD
 public class FakeGoalsService : IGoalsService
 {
     List<Goal> _goals;
@@ -14,6 +15,12 @@ public class FakeGoalsService : IGoalsService
         _goals = goals;
         _goal = goal;
     }
+=======
+public class FakeGoalsService(List<Goal> goals, Goal goal) : IGoalsService
+{
+    List<Goal> _goals = goals;
+    Goal _goal = goal;
+>>>>>>> 2bc1eb6 (Your commit message)
 
     public async Task<List<Goal>> GetAsync() =>
         await Task.FromResult(_goals);

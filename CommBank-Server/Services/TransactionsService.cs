@@ -4,6 +4,7 @@ using MongoDB.Driver;
 
 namespace CommBank.Services;
 
+<<<<<<< HEAD
 public class TransactionsService : ITransactionsService
 {
     private readonly IMongoCollection<Transaction> _transactionsCollection;
@@ -12,6 +13,11 @@ public class TransactionsService : ITransactionsService
     {
         _transactionsCollection = mongoDatabase.GetCollection<Transaction>("Transactions");
     }
+=======
+public class TransactionsService(IMongoDatabase mongoDatabase) : ITransactionsService
+{
+    private readonly IMongoCollection<Transaction> _transactionsCollection = mongoDatabase.GetCollection<Transaction>("Transactions");
+>>>>>>> 2bc1eb6 (Your commit message)
 
     public async Task<List<Transaction>> GetAsync() =>
         await _transactionsCollection.Find(_ => true).ToListAsync();

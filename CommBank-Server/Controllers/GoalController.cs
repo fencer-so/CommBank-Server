@@ -6,6 +6,7 @@ namespace CommBank.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+<<<<<<< HEAD
 public class GoalController : ControllerBase
 {
     private readonly IGoalsService _goalsService;
@@ -16,6 +17,12 @@ public class GoalController : ControllerBase
         _goalsService = goalsService;
         _usersService = usersService;
     }
+=======
+public class GoalController(IGoalsService goalsService, IUsersService usersService) : ControllerBase
+{
+    private readonly IGoalsService _goalsService = goalsService;
+    private readonly IUsersService _usersService = usersService;
+>>>>>>> 2bc1eb6 (Your commit message)
 
     [HttpGet]
     public async Task<List<Goal>> Get() =>

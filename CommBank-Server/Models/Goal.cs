@@ -27,4 +27,9 @@ public class Goal
 
     [BsonRepresentation(BsonType.ObjectId)]
     public string? UserId { get; set; }
+<<<<<<< HEAD
+=======
+        public string? Icon { get; set; }
+
+>>>>>>> 2bc1eb6 (Your commit message)
 }

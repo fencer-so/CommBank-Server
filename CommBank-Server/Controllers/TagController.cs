@@ -5,12 +5,18 @@ namespace CommBank.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+<<<<<<< HEAD
 public class TagController : ControllerBase
 {
     private readonly ITagsService _tagsService;
 
     public TagController(ITagsService tagsService) =>
         _tagsService = tagsService;
+=======
+public class TagController(ITagsService tagsService) : ControllerBase
+{
+    private readonly ITagsService _tagsService = tagsService;
+>>>>>>> 2bc1eb6 (Your commit message)
 
     [HttpGet]
     public async Task<List<CommBank.Models.Tag>> Get() =>

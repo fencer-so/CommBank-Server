@@ -3,6 +3,7 @@ using CommBank.Services;
 
 namespace CommBank.Tests.Fake;
 
+<<<<<<< HEAD
 public class FakeUsersService : IUsersService
 {
     List<User> _users;
@@ -13,6 +14,12 @@ public class FakeUsersService : IUsersService
         _users = users;
         _user = user;
     }
+=======
+public class FakeUsersService(List<User> users, User user) : IUsersService
+{
+    List<User> _users = users;
+    User _user = user;
+>>>>>>> 2bc1eb6 (Your commit message)
 
     public async Task<List<User>> GetAsync() =>
         await Task.FromResult(_users);

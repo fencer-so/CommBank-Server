@@ -3,6 +3,7 @@ using MongoDB.Driver;
 
 namespace CommBank.Services;
 
+<<<<<<< HEAD
 public class GoalsService : IGoalsService
 {
     private readonly IMongoCollection<Goal> _goalsCollection;
@@ -11,6 +12,11 @@ public class GoalsService : IGoalsService
     {
         _goalsCollection = mongoDatabase.GetCollection<Goal>("Goals");
     }
+=======
+public class GoalsService(IMongoDatabase mongoDatabase) : IGoalsService
+{
+    private readonly IMongoCollection<Goal> _goalsCollection = mongoDatabase.GetCollection<Goal>("Goals");
+>>>>>>> 2bc1eb6 (Your commit message)
 
     public async Task<List<Goal>> GetAsync() =>
         await _goalsCollection.Find(_ => true).ToListAsync();

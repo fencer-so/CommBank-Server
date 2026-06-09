@@ -6,6 +6,7 @@ interface IUpdatedIcon
 }
 
 
+<<<<<<< HEAD
 public class UpdatedIcon : IUpdatedIcon
 {
     public UpdatedIcon(string icon)
@@ -14,4 +15,9 @@ public class UpdatedIcon : IUpdatedIcon
     }
 
     public string Icon { get; set; }
+=======
+public class UpdatedIcon(string icon) : IUpdatedIcon
+{
+    public string Icon { get; set; } = icon;
+>>>>>>> 2bc1eb6 (Your commit message)
 }

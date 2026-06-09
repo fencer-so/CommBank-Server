@@ -4,6 +4,7 @@ using MongoDB.Driver;
 
 namespace CommBank.Services;
 
+<<<<<<< HEAD
 public class TagsService : ITagsService
 {
     private readonly IMongoCollection<Models.Tag> _tagsCollection;
@@ -12,6 +13,11 @@ public class TagsService : ITagsService
     {
         _tagsCollection = mongoDatabase.GetCollection<Models.Tag>("Tags");
     }
+=======
+public class TagsService(IMongoDatabase mongoDatabase) : ITagsService
+{
+    private readonly IMongoCollection<Models.Tag> _tagsCollection = mongoDatabase.GetCollection<Models.Tag>("Tags");
+>>>>>>> 2bc1eb6 (Your commit message)
 
     public async Task<List<Models.Tag>> GetAsync() =>
         await _tagsCollection.Find(_ => true).ToListAsync();

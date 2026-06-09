@@ -4,6 +4,7 @@ using CommBank.Services;
 
 namespace CommBank.Tests.Fake;
 
+<<<<<<< HEAD
 public class FakeAccountsService : IAccountsService
 {
     List<Account> _accounts;
@@ -14,6 +15,12 @@ public class FakeAccountsService : IAccountsService
         _accounts = accounts;
         _account = account;
     }
+=======
+public class FakeAccountsService(List<Account> accounts, Account account) : IAccountsService
+{
+    List<Account> _accounts = accounts;
+    Account _account = account;
+>>>>>>> 2bc1eb6 (Your commit message)
 
     public async Task<List<Account>> GetAsync() =>
         await Task.FromResult(_accounts);
