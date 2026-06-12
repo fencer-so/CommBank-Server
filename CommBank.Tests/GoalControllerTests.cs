@@ -62,13 +62,24 @@ public class GoalControllerTests
         Assert.NotEqual(goals[1], result.Value);
     }
 
-    [Fact]
-    public async void GetForUser()
+[Fact]
+public async Task GetGoalsForUser_ReturnsOk_WithListOfGoalsForSpecifiedUser()
+{
+    var testUserId = "user-123";
+    var mockGoals = new List<Goal>
     {
-        // Arrange
-        
-        // Act
-        
-        // Assert
+        new Goal { Id = "1", Name = "Emergency Fund", TargetAmount = 1000, PublicIcon = "💰" }
+    };
+
+    _mockGoalRepository.Setup(repo => repo.GetGoalsByUserIdAsync(testUserId))
+                       .ReturnsAsync(mockGoals);
+
+    var result = await _controller.GetGoalsForUser(testUserId);
+
+    var okResult = Assert.IsType<OkObjectResult>(result);
+    var returnedGoals = Assert.IsType<List<Goal>>(okResult.Value);
+    
+    Assert.Single(returnedGoals);
+    Assert.Equal("Emergency Fund", returnedGoals[0].Name);
     }
 }
