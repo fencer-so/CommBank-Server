@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace CommBank.Models;
@@ -10,6 +10,9 @@ public class Goal
     public string? Id { get; set; }
 
     public string? Name { get; set; }
+
+    // New optional Icon field
+    public string? Icon { get; set; }
 
     public UInt64 TargetAmount { get; set; } = 0;
 
