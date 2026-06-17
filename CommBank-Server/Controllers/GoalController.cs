@@ -1,102 +1,88 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CommBank.Services;
+﻿using Xunit;
+using Moq;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CommBank.Controllers;
 using CommBank.Models;
+using CommBank.Services;
 
-namespace CommBank.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class GoalController : ControllerBase
+namespace CommBank.Tests
 {
-    private readonly IGoalsService _goalsService;
-    private readonly IUsersService _usersService;
-
-    public GoalController(IGoalsService goalsService, IUsersService usersService)
+    public class GoalControllerTests
     {
-        _goalsService = goalsService;
-        _usersService = usersService;
-    }
+        private readonly Mock<IGoalsService> _mockGoalsService;
+        private readonly Mock<IUsersService> _mockUsersService;
+        private readonly GoalController _controller;
 
-    [HttpGet]
-    public async Task<List<Goal>> Get() =>
-        await _goalsService.GetAsync();
-
-    [HttpGet("{id:length(24)}")]
-    public async Task<ActionResult<Goal>> Get(string id)
-    {
-        var goal = await _goalsService.GetAsync(id);
-
-        if (goal is null)
+        public GoalControllerTests()
         {
-            return NotFound();
+            _mockGoalsService = new Mock<IGoalsService>();
+            _mockUsersService = new Mock<IUsersService>();
+
+            _controller = new GoalController(
+                _mockGoalsService.Object,
+                _mockUsersService.Object
+            );
         }
 
-        return goal;
-    }
-
-    [HttpGet("User/{id:length(24)}")]
-    public async Task<List<Goal>?> GetForUser(string id) =>
-        await _goalsService.GetForUserAsync(id);
-
-    [HttpPost]
-    public async Task<IActionResult> Post(Goal newGoal)
-    {
-        await _goalsService.CreateAsync(newGoal);
-
-        if (newGoal.Id is not null && newGoal.UserId is not null)
+        [Fact]
+        public async Task GetForUser_ReturnsGoals_WhenUserExists()
         {
-            var user = await _usersService.GetAsync(newGoal.UserId);
+            // Arrange
+            var userId = "507f1f77bcf86cd799439011";
 
-            if (user is not null && user.Id is not null)
+            var goals = new List<Goal>
             {
-                if (user.GoalIds is not null)
-                {
-                    user.GoalIds.Add(newGoal.Id);
-                }
-                else
-                {
-                    user.GoalIds = new()
-                    {
-                        newGoal.Id
-                    };
-                }
+                new Goal { Id = "1", UserId = userId },
+                new Goal { Id = "2", UserId = userId }
+            };
 
-                await _usersService.UpdateAsync(user.Id, user);
-            }
+            _mockGoalsService
+                .Setup(s => s.GetForUserAsync(userId))
+                .ReturnsAsync(goals);
+
+            // Act
+            var result = await _controller.GetForUser(userId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count);
         }
 
-        return CreatedAtAction(nameof(Get), new { id = newGoal.Id }, newGoal);
-    }
-
-    [HttpPut("{id:length(24)}")]
-    public async Task<IActionResult> Update(string id, Goal updatedGoal)
-    {
-        var goal = await _goalsService.GetAsync(id);
-
-        if (goal is null)
+        [Fact]
+        public async Task GetForUser_ReturnsEmptyList_WhenNoGoals()
         {
-            return NotFound();
+            // Arrange
+            var userId = "507f1f77bcf86cd799439011";
+
+            _mockGoalsService
+                .Setup(s => s.GetForUserAsync(userId))
+                .ReturnsAsync(new List<Goal>());
+
+            // Act
+            var result = await _controller.GetForUser(userId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
         }
 
-        updatedGoal.Id = goal.Id;
-
-        await _goalsService.UpdateAsync(id, updatedGoal);
-
-        return NoContent();
-    }
-
-    [HttpDelete("{id:length(24)}")]
-    public async Task<IActionResult> Delete(string id)
-    {
-        var goal = await _goalsService.GetAsync(id);
-
-        if (goal is null)
+        [Fact]
+        public async Task GetForUser_CallsServiceOnce()
         {
-            return NotFound();
+            // Arrange
+            var userId = "507f1f77bcf86cd799439011";
+
+            _mockGoalsService
+                .Setup(s => s.GetForUserAsync(userId))
+                .ReturnsAsync(new List<Goal>());
+
+            // Act
+            await _controller.GetForUser(userId);
+
+            // Assert
+            _mockGoalsService.Verify(s => s.GetForUserAsync(userId), Times.Once);
         }
-
-        await _goalsService.RemoveAsync(id);
-
-        return NoContent();
     }
 }
