@@ -1,8 +1,9 @@
-﻿using MongoDB.Bson;
+﻿using CommBank.Data;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace CommBank.Models;
-
+[CollectionName("Goals")]
 public class Goal
 {
     [BsonId]
@@ -10,6 +11,8 @@ public class Goal
     public string? Id { get; set; }
 
     public string? Name { get; set; }
+    
+    public string? Icon { get; set; }
 
     public UInt64 TargetAmount { get; set; } = 0;
 

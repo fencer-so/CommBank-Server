@@ -1,4 +1,5 @@
-﻿using CommBank.Models;
+﻿using CommBank.Data;
+using CommBank.Models;
 using CommBank.Services;
 using MongoDB.Driver;
 
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
 var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
+builder.Services.AddScoped<IMongoDatabase>(x => mongoClient.GetDatabase("CommBank") );
 var mongoDatabase = mongoClient.GetDatabase("CommBank");
 
 IAccountsService accountsService = new AccountsService(mongoDatabase);
@@ -31,6 +33,8 @@ builder.Services.AddSingleton(usersService);
 builder.Services.AddCors();
 
 var app = builder.Build();
+
+await app.SeedDataAsync();
 
 app.UseCors(builder => builder
    .AllowAnyOrigin()
