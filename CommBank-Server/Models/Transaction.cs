@@ -1,9 +1,11 @@
 ﻿using MongoDB.Bson;
 using System.Text.Json.Serialization;
+using CommBank.Data;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace CommBank.Models;
 
+[CollectionName("Transactions")]
 public class Transaction
 {
     [BsonId]

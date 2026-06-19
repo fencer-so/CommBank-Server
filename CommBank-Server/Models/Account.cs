@@ -1,9 +1,11 @@
 ﻿using MongoDB.Bson;
 using System.Text.Json.Serialization;
+using CommBank.Data;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace CommBank.Models;
 
+[CollectionName("Accounts")]
 public class Account
 {
     [BsonId]
@@ -11,7 +13,7 @@ public class Account
     public string? Id { get; set; }
 
     public long? Number { get; set; }
-
+    
     public string? Name { get; set; }
 
     public double Balance { get; set; } = 0;

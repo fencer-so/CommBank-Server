@@ -1,8 +1,10 @@
-﻿using MongoDB.Bson;
+﻿using CommBank.Data;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace CommBank.Models;
 
+[CollectionName("Users")]
 public class User
 {
     [BsonId]
