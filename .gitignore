@@ -11,6 +11,9 @@ autom4te.cache/
 tarballs/
 test-results/
 
+# Local secrets - never commit
+Secrets.json
+
 # Mac bundle stuff
 *.dmg
 *.app
