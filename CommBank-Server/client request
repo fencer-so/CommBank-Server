@@ -1,0 +1,24 @@
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+let user = {
+  id: 1,
+  name: 'John',
+  icon: '😊'
+};
+
+app.get('/api/user', (req, res) => {
+  res.json(user);
+});
+
+app.put('/api/user/icon', (req, res) => {
+  const { icon } = req.body;
+  if (!icon) {
+    return res.status(400).json({ error: 'Icon is required' });
+  }
+  user.icon = icon;
+  res.json({ success: true, icon });
+});
+
+app.listen(5000, () => console.log('Server running on port 5000'));
