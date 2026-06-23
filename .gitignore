@@ -200,6 +200,11 @@ _TeamCity*
 # DotCover is a Code Coverage Tool
 *.dotCover
 
+# Local secret and configuration files
+Secrets.json
+appsettings*.json
+*.dotCover
+
 # AxoCover is a Code Coverage Tool
 .axoCover/*
 !.axoCover/settings.json
