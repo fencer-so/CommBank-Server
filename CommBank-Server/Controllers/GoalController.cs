@@ -99,4 +99,24 @@ public class GoalController : ControllerBase
 
         return NoContent();
     }
+    [Fact]
+public async Task GetGoalsForUser_ReturnsAllGoalsForAUser()
+{
+    // Arrange
+    var userId = "test-user-id";
+    var expectedGoals = new List<Goal> 
+    { 
+        new Goal { Id = "1", Name = "Buy a Car", UserId = userId },
+        new Goal { Id = "2", Name = "Save for Holiday", UserId = userId }
+    };
+    _mockGoalRepository.Setup(repo => repo.GetForUser(userId)).ReturnsAsync(expectedGoals);
+
+    // Act
+    var result = await _controller.GetGoalsForUser(userId);
+
+    // Assert
+    var okResult = Assert.IsType<OkObjectResult>(result.Result);
+    var returnedGoals = Assert.IsType<List<Goal>>(okResult.Value);
+    Assert.Equal(2, returnedGoals.Count);
+}
 }
