@@ -2,6 +2,9 @@
 using CommBank.Services;
 using MongoDB.Driver;
 
+System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12 | System.Net.SecurityProtocolType.Tls13;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();

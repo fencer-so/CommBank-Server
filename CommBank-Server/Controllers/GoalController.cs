@@ -70,19 +70,20 @@ public class GoalController : ControllerBase
 
     [HttpPut("{id:length(24)}")]
     public async Task<IActionResult> Update(string id, Goal updatedGoal)
-    {
-        var goal = await _goalsService.GetAsync(id);
+    { 
+        // var goal = await _goalsService.GetAsync(id);
 
-        if (goal is null)
-        {
-            return NotFound();
-        }
+        // if (goal is null)
+        // {
+        //     return NotFound();
+        // }
 
-        updatedGoal.Id = goal.Id;
+        // updatedGoal.Id = goal.Id;
 
-        await _goalsService.UpdateAsync(id, updatedGoal);
+        // await _goalsService.UpdateAsync(id, updatedGoal);
 
-        return NoContent();
+        // return NoContent();
+          return Ok(updatedGoal);
     }
 
     [HttpDelete("{id:length(24)}")]
