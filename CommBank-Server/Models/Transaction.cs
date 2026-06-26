@@ -10,22 +10,37 @@ public class Transaction
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
 
+
     [JsonConverter(typeof(JsonStringEnumConverter))]
     [BsonRepresentation(BsonType.String)]
     public TransactionType TransactionType { get; set; }
 
+
     public double Amount { get; set; } = 0.00;
 
+
     public DateTime DateTime { get; set; } = DateTime.Now;
+
 
     [BsonRepresentation(BsonType.ObjectId)]
     public string? GoalId { get; set; }
 
+
     [BsonRepresentation(BsonType.ObjectId)]
     public string? UserId { get; set; }
 
+
     [BsonRepresentation(BsonType.ObjectId)]
     public string[]? TagIds { get; set; }
+
+
+
+    // NEW FIELD
+    // This will be filled from backend
+    [BsonIgnore]
+    public List<Tag> Tags { get; set; } = new();
+
+
 
     public string? Description { get; set; }
 }
