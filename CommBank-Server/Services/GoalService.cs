@@ -1,4 +1,4 @@
-﻿using CommBank.Models;
+using CommBank.Models;
 using MongoDB.Driver;
 
 namespace CommBank.Services;
@@ -9,7 +9,7 @@ public class GoalsService : IGoalsService
 
     public GoalsService(IMongoDatabase mongoDatabase)
     {
-        _goalsCollection = mongoDatabase.GetCollection<Goal>("Goals");
+        _goalsCollection = mongoDatabase.GetCollection<Goal>("goals");
     }
 
     public async Task<List<Goal>> GetAsync() =>
