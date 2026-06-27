@@ -30,6 +30,10 @@
     <Folder Include="Services\" />
     <Folder Include="Models\" />
     <Folder Include="Properties\" />
-    <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Data\Goals.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

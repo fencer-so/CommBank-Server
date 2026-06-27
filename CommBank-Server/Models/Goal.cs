@@ -9,6 +9,8 @@ public class Goal
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
 
+    public string? Icon { get; set; }
+
     public string? Name { get; set; }
 
     public UInt64 TargetAmount { get; set; } = 0;

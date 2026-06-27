@@ -1,0 +1,23 @@
+{
+  "name": "commbank-codelabs",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --config .prettierrc 'codelabs/*.md' 'tasks/*/**' --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fencer-so/commbank-codelabs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fencer-so/commbank-codelabs/issues"
+  },
+  "homepage": "https://github.com/fencer-so/commbank-codelabs#readme",
+  "dependencies": {
+    "prettier": "^2.6.2"
+  }
+}
