@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"name": "CommBank-Server-",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"LE61.C": "cpp",
+			"LE7_1.C": "cpp",
+			"stdlib.h": "c"
+		}
+	}
+}
