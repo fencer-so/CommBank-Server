@@ -75,7 +75,7 @@ public class GoalController : ControllerBase
 
         if (goal is null)
         {
-            return NotFound();
+            return NotFound(); 
         }
 
         updatedGoal.Id = goal.Id;
