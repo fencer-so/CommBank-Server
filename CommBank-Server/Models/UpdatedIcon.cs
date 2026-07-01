@@ -2,16 +2,19 @@
 
 interface IUpdatedIcon
 {
-    string Icon { get; set; }
+    string? Icon { get; set; }
 }
-
 
 public class UpdatedIcon : IUpdatedIcon
 {
-    public UpdatedIcon(string icon)
+    public UpdatedIcon()
+    {
+    }
+
+    public UpdatedIcon(string? icon)
     {
         Icon = icon;
     }
 
-    public string Icon { get; set; }
+    public string? Icon { get; set; }
 }

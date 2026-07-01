@@ -27,8 +27,11 @@ public class FakeGoalsService : IGoalsService
     public async Task CreateAsync(Goal newGoal) =>
         await Task.FromResult(true);
 
-    public async Task UpdateAsync(string id, Goal updatedGoal) =>
+    public async Task UpdateAsync(string id, Goal updatedGoal)
+    {
+        _goal = updatedGoal;
         await Task.FromResult(true);
+    }
 
     public async Task RemoveAsync(string id) =>
         await Task.FromResult(true);

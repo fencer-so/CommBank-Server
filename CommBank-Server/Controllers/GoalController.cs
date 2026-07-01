@@ -85,6 +85,22 @@ public class GoalController : ControllerBase
         return NoContent();
     }
 
+    [HttpPatch("{id:length(24)}/icon")]
+    public async Task<ActionResult<Goal>> UpdateIcon(string id, UpdatedIcon updatedIcon)
+    {
+        var goal = await _goalsService.GetAsync(id);
+
+        if (goal is null)
+        {
+            return NotFound();
+        }
+
+        goal.Icon = updatedIcon.Icon;
+        await _goalsService.UpdateAsync(id, goal);
+
+        return Ok(goal);
+    }
+
     [HttpDelete("{id:length(24)}")]
     public async Task<IActionResult> Delete(string id)
     {
