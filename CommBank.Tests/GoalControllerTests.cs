@@ -66,9 +66,62 @@ public class GoalControllerTests
     public async void GetForUser()
     {
         // Arrange
-        
+        var goals = collections.GetGoals();
+        var users = collections.GetUsers();
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+        GoalController controller = new(goalsService, usersService);
+
         // Act
-        
+        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
+        controller.ControllerContext.HttpContext = httpContext;
+        var result = await controller.GetForUser(users[0].Id!);
+
         // Assert
+        Assert.NotNull(result);
+        Assert.NotEmpty(result!);
+        Assert.Equal(3, result!.Count);
+        Assert.Equal(goals, result);
+    }
+
+    [Fact]
+    public async void Get_IncludesIconWhenAvailable()
+    {
+        // Arrange
+        var goals = collections.GetGoals();
+        goals[0].Icon = "🎯";
+        var users = collections.GetUsers();
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+        GoalController controller = new(goalsService, usersService);
+
+        // Act
+        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
+        controller.ControllerContext.HttpContext = httpContext;
+        var result = await controller.Get(goals[0].Id!);
+
+        // Assert
+        Assert.Equal("🎯", result.Value!.Icon);
+    }
+
+    [Fact]
+    public async void UpdateIcon_StoresNewIcon()
+    {
+        // Arrange
+        var goals = collections.GetGoals();
+        var users = collections.GetUsers();
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+        GoalController controller = new(goalsService, usersService);
+
+        // Act
+        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
+        controller.ControllerContext.HttpContext = httpContext;
+        var result = await controller.UpdateIcon(goals[0].Id!, new UpdatedIcon("💡"));
+
+        // Assert
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var goal = Assert.IsType<Goal>(okResult.Value);
+        Assert.Equal("💡", goal.Icon);
     }
 }
