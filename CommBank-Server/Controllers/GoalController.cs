@@ -27,9 +27,7 @@ public class GoalController : ControllerBase
         var goal = await _goalsService.GetAsync(id);
 
         if (goal is null)
-        {
             return NotFound();
-        }
 
         return goal;
     }
@@ -49,17 +47,10 @@ public class GoalController : ControllerBase
 
             if (user is not null && user.Id is not null)
             {
-                if (user.GoalIds is not null)
-                {
-                    user.GoalIds.Add(newGoal.Id);
-                }
-                else
-                {
-                    user.GoalIds = new()
-                    {
-                        newGoal.Id
-                    };
-                }
+                if (user.GoalIds is null)
+                    user.GoalIds = new List<string>();
+
+                user.GoalIds.Add(newGoal.Id);
 
                 await _usersService.UpdateAsync(user.Id, user);
             }
@@ -74,9 +65,7 @@ public class GoalController : ControllerBase
         var goal = await _goalsService.GetAsync(id);
 
         if (goal is null)
-        {
             return NotFound();
-        }
 
         updatedGoal.Id = goal.Id;
 
@@ -91,9 +80,7 @@ public class GoalController : ControllerBase
         var goal = await _goalsService.GetAsync(id);
 
         if (goal is null)
-        {
             return NotFound();
-        }
 
         await _goalsService.RemoveAsync(id);
 

@@ -15,3 +15,4 @@ public class UpdatedIcon : IUpdatedIcon
 
     public string Icon { get; set; }
 }
+Console.WriteLine("PR trigger - Goal updated successfully");
