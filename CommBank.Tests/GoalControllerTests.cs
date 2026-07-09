@@ -23,7 +23,7 @@ public class GoalControllerTests
         var users = collections.GetUsers();
         IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
         IUsersService usersService = new FakeUsersService(users, users[0]);
-        GoalController controller = new(goalsService, usersService);
+         GoalController controller = new(goalsService);
 
         // Act
         var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
@@ -49,7 +49,7 @@ public class GoalControllerTests
         var users = collections.GetUsers();
         IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
         IUsersService usersService = new FakeUsersService(users, users[0]);
-        GoalController controller = new(goalsService, usersService);
+      GoalController controller = new(goalsService);
 
         // Act
         var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
@@ -61,14 +61,35 @@ public class GoalControllerTests
         Assert.Equal(goals[0], result.Value);
         Assert.NotEqual(goals[1], result.Value);
     }
+[Fact]
+public async void GetForUser()
+{
+    // Arrange
+    var goals = collections.GetGoals();
+    var users = collections.GetUsers();
 
-    [Fact]
-    public async void GetForUser()
+    // Make fake goals belong to the fake user
+    foreach (var goal in goals)
     {
-        // Arrange
-        
-        // Act
-        
-        // Assert
+        goal.UserId = users[0].Id;
     }
+
+    IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+
+    GoalController controller = new(goalsService);
+
+    // Act
+    var result = await controller.GetGoalsForUser(users[0].Id!);
+
+    // Assert
+    Assert.NotNull(result.Value);
+
+    Assert.Equal(goals.Count, result.Value!.Count);
+
+    for (int i = 0; i < goals.Count; i++)
+    {
+        Assert.Equal(goals[i].Id, result.Value[i].Id);
+        Assert.Equal(goals[i].Name, result.Value[i].Name);
+    }
+}
 }
