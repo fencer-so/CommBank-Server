@@ -27,4 +27,7 @@ public class Goal
 
     [BsonRepresentation(BsonType.ObjectId)]
     public string? UserId { get; set; }
+
+    // Task 1: Added optional public Icon field of string type
+    public string? Icon { get; set; }
 }
