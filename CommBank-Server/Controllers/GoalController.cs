@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using CommBank.Services;
 using CommBank.Models;
 
@@ -78,9 +78,16 @@ public class GoalController : ControllerBase
             return NotFound();
         }
 
-        updatedGoal.Id = goal.Id;
-
-        await _goalsService.UpdateAsync(id, updatedGoal);
+        if (updatedGoal.Name is null)
+        {
+            goal.Icon = updatedGoal.Icon;
+            await _goalsService.UpdateAsync(id, goal);
+        }
+        else
+        {
+            updatedGoal.Id = goal.Id;
+            await _goalsService.UpdateAsync(id, updatedGoal);
+        }
 
         return NoContent();
     }
