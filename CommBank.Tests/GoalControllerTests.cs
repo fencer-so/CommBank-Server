@@ -1,4 +1,6 @@
-﻿using CommBank.Controllers;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using CommBank.Controllers;
 using CommBank.Services;
 using CommBank.Models;
 using CommBank.Tests.Fake;
@@ -16,7 +18,7 @@ public class GoalControllerTests
     }
 
     [Fact]
-    public async void GetAll()
+    public async Task GetAll()
     {
         // Arrange
         var goals = collections.GetGoals();
@@ -37,12 +39,13 @@ public class GoalControllerTests
             Assert.IsAssignableFrom<Goal>(goal);
             Assert.Equal(goals[index].Id, goal.Id);
             Assert.Equal(goals[index].Name, goal.Name);
+            Assert.Equal(goals[index].Icon, goal.Icon);
             index++;
         }
     }
 
     [Fact]
-    public async void Get()
+    public async Task Get()
     {
         // Arrange
         var goals = collections.GetGoals();
@@ -63,12 +66,29 @@ public class GoalControllerTests
     }
 
     [Fact]
-    public async void GetForUser()
+    public async Task GetForUser()
     {
         // Arrange
+        var goals = collections.GetGoals();
+        var users = collections.GetUsers();
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+        GoalController controller = new(goalsService, usersService);
         
         // Act
+        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
+        controller.ControllerContext.HttpContext = httpContext;
+        var result = await controller.GetForUser(users[0].Id!);
         
         // Assert
+        Assert.IsAssignableFrom<List<Goal>>(result);
+        var index = 0;
+        foreach (Goal goal in result!)
+        {
+            Assert.Equal(goals[index].Id, goal.Id);
+            Assert.Equal(goals[index].Name, goal.Name);
+            Assert.Equal(goals[index].Icon, goal.Icon);
+            index++;
+        }
     }
 }
