@@ -1,4 +1,5 @@
-﻿using CommBank.Models;
+﻿using CommBank.Data;
+using CommBank.Models;
 using CommBank.Services;
 using MongoDB.Driver;
 
@@ -31,6 +32,8 @@ builder.Services.AddSingleton(usersService);
 builder.Services.AddCors();
 
 var app = builder.Build();
+
+await DatabaseSeeder.SeedAsync(mongoDatabase, app.Environment.ContentRootPath);
 
 app.UseCors(builder => builder
    .AllowAnyOrigin()
