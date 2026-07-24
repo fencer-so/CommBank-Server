@@ -62,13 +62,20 @@ public class GoalControllerTests
         Assert.NotEqual(goals[1], result.Value);
     }
 
-    [Fact]
-    public async void GetForUser()
-    {
-        // Arrange
-        
-        // Act
-        
-        // Assert
-    }
+   [Fact]
+public async Task GetForUser()
+{
+    // Arrange
+    var goals = collections.GetGoals();
+    var users = collections.GetUsers();
+    IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+    IUsersService usersService = new FakeUsersService(users, users[0]);
+    GoalController controller = new GoalController(goalsService, usersService);
+
+    // Act
+    var result = await controller.GetGoalsForUser(users[0].Id);
+
+    // Assert
+    Assert.NotNull(result);
+}
 }
