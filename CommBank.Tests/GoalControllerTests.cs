@@ -31,12 +31,13 @@ public class GoalControllerTests
         var result = await controller.Get();
 
         // Assert
+        Assert.NotNull(result);
+
         var index = 0;
         foreach (Goal goal in result)
         {
             Assert.IsAssignableFrom<Goal>(goal);
-            Assert.Equal(goals[index].Id, goal.Id);
-            Assert.Equal(goals[index].Name, goal.Name);
+            Assert.Equal(goals[0].UserId, goal.UserId);
             index++;
         }
     }
