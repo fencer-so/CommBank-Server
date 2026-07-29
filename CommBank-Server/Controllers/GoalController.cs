@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using CommBank.Services;
 using CommBank.Models;
 
@@ -69,7 +69,7 @@ public class GoalController : ControllerBase
     }
 
     [HttpPut("{id:length(24)}")]
-    public async Task<IActionResult> Update(string id, Goal updatedGoal)
+    public async Task<IActionResult> Update(string id, UpdatedIcon updatedIcon)
     {
         var goal = await _goalsService.GetAsync(id);
 
@@ -78,9 +78,9 @@ public class GoalController : ControllerBase
             return NotFound();
         }
 
-        updatedGoal.Id = goal.Id;
+        goal.Icon = updatedIcon.Icon;
 
-        await _goalsService.UpdateAsync(id, updatedGoal);
+        await _goalsService.UpdateAsync(id, goal);
 
         return NoContent();
     }
