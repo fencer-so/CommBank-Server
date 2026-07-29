@@ -1,4 +1,4 @@
-﻿namespace CommBank.Models;
+namespace CommBank.Models;
 
 interface IUpdatedIcon
 {
@@ -8,6 +8,11 @@ interface IUpdatedIcon
 
 public class UpdatedIcon : IUpdatedIcon
 {
+    public UpdatedIcon()
+    {
+        Icon = string.Empty;
+    }
+
     public UpdatedIcon(string icon)
     {
         Icon = icon;
