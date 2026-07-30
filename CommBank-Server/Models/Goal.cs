@@ -25,6 +25,9 @@ public class Goal
     [BsonRepresentation(BsonType.ObjectId)]
     public List<string>? TagIds { get; set; }
 
+    // Added for Task 1
+    public string? Icon { get; set; }
+
     [BsonRepresentation(BsonType.ObjectId)]
     public string? UserId { get; set; }
 }
