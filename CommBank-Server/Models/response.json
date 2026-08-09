@@ -1,0 +1,26 @@
+[
+  {
+    "id": "6a74ad501d6c2223f5e80277",
+    "name": "Buy a Laptop",
+    "icon": "💻",
+    "targetAmount": 80000,
+    "targetDate": "2027-01-01T00:00:00Z",
+    "balance": 5000,
+    "created": "2026-08-06T00:00:00Z",
+    "transactionIds": [],
+    "tagIds": [],
+    "userId": null
+  },
+  {
+    "id": "6a74ad671d6c2223f5e80278",
+    "name": "Buy a Laptop",
+    "icon": "💻",
+    "targetAmount": 80000,
+    "targetDate": "2027-01-01T00:00:00Z",
+    "balance": 5000,
+    "created": "2026-08-06T00:00:00Z",
+    "transactionIds": [],
+    "tagIds": [],
+    "userId": null
+  }
+]
