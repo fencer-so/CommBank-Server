@@ -1,30 +1,61 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+import React from 'react'
+import styled from 'styled-components'
+import { selectGoalsMap } from '../../../../store/goalsSlice'
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks'
+import {
+  setContent as setContentRedux,
+  setIsOpen as setIsOpenRedux,
+  setType as setTypeRedux
+} from '../../../../store/modalSlice'
+import { Card } from '../../../components/Card'
 
-namespace CommBank.Models;
+type Props = { id: string }
 
-public class Goal
-{
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; set; }
+export default function GoalCard(props: Props) {
+  const dispatch = useAppDispatch()
 
-    public string? Name { get; set; }
+  const goal = useAppSelector(selectGoalsMap)[props.id]
 
-    public UInt64 TargetAmount { get; set; } = 0;
+  const onClick = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    dispatch(setContentRedux(goal))
+    dispatch(setTypeRedux('Goal'))
+    dispatch(setIsOpenRedux(true))
+  }
 
-    public DateTime TargetDate { get; set; }
+  const asLocaleDateString = (date: Date) => new Date(date).toLocaleDateString()
 
-    public double Balance { get; set; } = 0.00;
-
-    public DateTime Created { get; set; } = DateTime.Now;
-
-    [BsonRepresentation(BsonType.ObjectId)]
-    public List<string>? TransactionIds { get; set; }
-
-    [BsonRepresentation(BsonType.ObjectId)]
-    public List<string>? TagIds { get; set; }
-
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string? UserId { get; set; }
+  return (
+    <Container key={goal.id} onClick={onClick}>
+      <TargetAmount>${goal.targetAmount}</TargetAmount>
+      <TargetDate>{asLocaleDateString(goal.targetDate)}</TargetDate>
+      <Icon>{goal.icon}</Icon>
+    </Container>
+  )
 }
+
+const Container = styled(Card)`
+  display: flex;
+  flex-direction: column;
+  min-height: 140px;
+  min-width: 140px;
+  width: 33%;
+  cursor: pointer;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  border-radius: 2rem;
+
+  align-items: center;
+`
+const TargetAmount = styled.h2`
+  font-size: 2rem;
+`
+
+const TargetDate = styled.h4`
+  color: rgba(174, 174, 174, 1);
+  font-size: 1rem;
+`
+
+const Icon = styled.h1`
+  font-size: 5.5rem;
+`
