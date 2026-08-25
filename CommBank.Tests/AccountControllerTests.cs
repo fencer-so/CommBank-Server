@@ -56,4 +56,19 @@ public class AccountControllerTests
         Assert.Equal(accounts[0], result.Value);
         Assert.NotEqual(accounts[1], result.Value);
     }
+
+    [Fact]
+    public async Task Get_WhenAccountDoesNotExist_ReturnsNotFound()
+    {
+        // Arrange
+        var accounts = collections.GetAccounts();
+        IAccountsService service = new FakeAccountsService(accounts, null);
+        AccountController controller = new(service);
+
+        // Act
+        var result = await controller.Get("nonexistent");
+
+        // Assert
+        Assert.IsType<NotFoundResult>(result.Result);
+    }
 }
