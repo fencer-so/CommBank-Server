@@ -16,8 +16,11 @@ public class Goal
     public DateTime TargetDate { get; set; }
 
     public double Balance { get; set; } = 0.00;
+    public string? Icon { get; set; }
 
     public DateTime Created { get; set; } = DateTime.Now;
+
+   
 
     [BsonRepresentation(BsonType.ObjectId)]
     public List<string>? TransactionIds { get; set; }
