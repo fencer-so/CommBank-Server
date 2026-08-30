@@ -1,4 +1,4 @@
-﻿using CommBank.Controllers;
+using CommBank.Controllers;
 using CommBank.Services;
 using CommBank.Models;
 using CommBank.Tests.Fake;
@@ -37,6 +37,7 @@ public class GoalControllerTests
             Assert.IsAssignableFrom<Goal>(goal);
             Assert.Equal(goals[index].Id, goal.Id);
             Assert.Equal(goals[index].Name, goal.Name);
+            Assert.Equal(goals[index].Icon, goal.Icon);
             index++;
         }
     }
@@ -59,6 +60,7 @@ public class GoalControllerTests
         // Assert
         Assert.IsAssignableFrom<Goal>(result.Value);
         Assert.Equal(goals[0], result.Value);
+        Assert.Equal(goals[0].Icon, result.Value?.Icon);
         Assert.NotEqual(goals[1], result.Value);
     }
 
