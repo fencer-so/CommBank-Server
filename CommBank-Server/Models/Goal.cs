@@ -18,7 +18,7 @@ public class Goal
     public double Balance { get; set; } = 0.00;
 
     public DateTime Created { get; set; } = DateTime.Now;
-
+    public string? icon { get; set; }
     [BsonRepresentation(BsonType.ObjectId)]
     public List<string>? TransactionIds { get; set; }
 
@@ -27,4 +27,5 @@ public class Goal
 
     [BsonRepresentation(BsonType.ObjectId)]
     public string? UserId { get; set; }
+    
 }
