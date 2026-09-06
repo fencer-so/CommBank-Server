@@ -64,7 +64,6 @@ public class GoalController : ControllerBase
                 await _usersService.UpdateAsync(user.Id, user);
             }
         }
-
         return CreatedAtAction(nameof(Get), new { id = newGoal.Id }, newGoal);
     }
 
