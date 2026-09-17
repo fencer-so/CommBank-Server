@@ -1,3 +1,6 @@
+# local secrets, never commit real credentials
+CommBank-Server/Secrets.json
+
 # globs
 Makefile.in
 *.userprefs
