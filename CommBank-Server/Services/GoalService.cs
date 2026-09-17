@@ -25,7 +25,10 @@ public class GoalsService : IGoalsService
         await _goalsCollection.InsertOneAsync(newGoal);
 
     public async Task UpdateAsync(string id, Goal updatedGoal) =>
-        await _goalsCollection.ReplaceOneAsync(x => x.Id == id, updatedGoal);
+        await _goalsCollection.UpdateOneAsync(
+            x => x.Id == id,
+            Builders<Goal>.Update.Set(x => x.Icon, updatedGoal.Icon)
+        );
 
     public async Task RemoveAsync(string id) =>
         await _goalsCollection.DeleteOneAsync(x => x.Id == id);
