@@ -15,6 +15,11 @@ test-results/
 *.dmg
 *.app
 
+# Secrets and env
+*Secrets*
+*secrets*
+*SECRETS*
+
 # NixOS
 .envrc
 .direnv
