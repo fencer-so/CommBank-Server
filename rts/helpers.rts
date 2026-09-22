@@ -1,0 +1,19 @@
+module helpers
+
+export fn users() {
+  return [
+    {id: "user-2", name: "Grace", age: 28, active: true},
+    {id: "user-3", name: "Linus", nickname: "Lin", age: 24, active: false}
+  ]
+}
+
+export fn userPayload(user) {
+  return {
+    id: user.id,
+    name: user.name,
+    role: user["role"] ?? "member",
+    age: user.age,
+    displayName: user["nickname"] ?? user.name,
+    status: user.active ? "active" : "inactive"
+  }
+}

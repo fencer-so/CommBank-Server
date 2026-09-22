@@ -13,17 +13,38 @@ namespace CommBank.Tests.Fake
 
         public FakeCollections()
         {
+            users = new()
+            {
+                new()
+                {
+                    Id = "507f1f77bcf86cd799439011",
+                    Name = "Tag"
+                },
+
+                new()
+                {
+                    Id = "507f1f77bcf86cd799439012",
+                    Name = "Trot"
+                },
+
+                new()
+                {
+                    Id = "507f1f77bcf86cd799439013",
+                    Name = "Tugg"
+                }
+            };
+
             accounts = new()
             {
                 new()
                 {
-                    Id = "1",
+                    Id = "607f1f77bcf86cd799439021",
                     Name = "Tag's GoalSaver"
                 },
 
                 new()
                 {
-                    Id = "2",
+                    Id = "607f1f77bcf86cd799439022",
                     Name = "Trot's GoalSaver"
                 }
             };
@@ -32,20 +53,23 @@ namespace CommBank.Tests.Fake
             {
                 new()
                 {
-                    Id = "1",
-                    Name = "House Down Payment"
+                    Id = "607f1f77bcf86cd799439011",
+                    Name = "House Down Payment",
+                    UserId = "507f1f77bcf86cd799439011"
                 },
 
                 new()
                 {
-                    Id = "2",
-                    Name = "Tesla Model Y"
+                    Id = "607f1f77bcf86cd799439012",
+                    Name = "Tesla Model Y",
+                    UserId = "507f1f77bcf86cd799439011"
                 },
 
                 new()
                 {
-                    Id = "3",
-                    Name = "Trip to London"
+                    Id = "607f1f77bcf86cd799439013",
+                    Name = "Trip to London",
+                    UserId = "507f1f77bcf86cd799439012"
                 },
             };
 
@@ -53,12 +77,12 @@ namespace CommBank.Tests.Fake
             {
                 new()
                 {
-                    Id = "1"
+                    Id = "707f1f77bcf86cd799439011"
                 },
 
                 new()
                 {
-                    Id = "2"
+                    Id = "707f1f77bcf86cd799439012"
                 }
             };
 
@@ -66,33 +90,12 @@ namespace CommBank.Tests.Fake
             {
                 new()
                 {
-                    Id = "1"
+                    Id = "807f1f77bcf86cd799439011"
                 },
 
                 new()
                 {
-                    Id = "2"
-                }
-            };
-
-            users = new()
-            {
-                new()
-                {
-                    Id = "1",
-                    Name = "Tag"
-                },
-
-                new()
-                {
-                    Id = "2",
-                    Name = "Trot"
-                },
-
-                new()
-                {
-                    Id = "3",
-                    Name = "Tugg"
+                    Id = "807f1f77bcf86cd799439012"
                 }
             };
         }

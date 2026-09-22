@@ -1,0 +1,14 @@
+### GET Goal
+# @name GET Goal
+# @asset response.statusCode == 200
+GET {{base.url}}/api/Goal/62a3f587102e921da1253d32
+
+### PUT Icon
+# @name PUT Icon
+# @assert response.statusCode == 204
+PUT {{base.url}}/api/Goal/62a3f587102e921da1253d32
+Content-Type: application/json
+
+{
+  "icon": "🤺"
+}
