@@ -1,0 +1,4 @@
+### GET Goal
+# @name GET Goal
+# @asset response.statusCode == 200
+GET {{base.url}}/api/Goal/62a3f587102e921da1253d32
