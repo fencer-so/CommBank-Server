@@ -20,6 +20,8 @@
           ])
           omnisharp-roslyn
           csharpier
+          mongodb-tools
+          mongosh
         ];
       };
     };
