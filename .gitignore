@@ -15,6 +15,10 @@ test-results/
 *.dmg
 *.app
 
+# NixOS
+.envrc
+.direnv
+
 # content below from: https://github.com/github/gitignore/blob/main/Global/macOS.gitignore
 # General
 .DS_Store
