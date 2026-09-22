@@ -1,6 +1,9 @@
-﻿using CommBank.Models;
+﻿using System.Security.Authentication;
+using CommBank.Models;
 using CommBank.Services;
+
 using MongoDB.Driver;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +14,21 @@ builder.Services.AddSwaggerGen();
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
-var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
+// var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank")); 
+var connectionString = builder.Configuration.GetConnectionString("CommBank");
+
+var settings = MongoClientSettings.FromConnectionString(connectionString);
+
+settings.UseTls = true;
+
+settings.SslSettings = new SslSettings
+{
+    EnabledSslProtocols = SslProtocols.Tls12
+};
+
+var mongoClient = new MongoClient(settings);
+
+
 var mongoDatabase = mongoClient.GetDatabase("CommBank");
 
 IAccountsService accountsService = new AccountsService(mongoDatabase);
