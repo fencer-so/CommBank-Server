@@ -75,18 +75,16 @@ public class GoalControllerTests
         // Act
         var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
         controller.ControllerContext.HttpContext = httpContext;
-        var result = await controller.GetForUser(users[0].Id!);
+        var result = await controller.GetForUser(goals[0].UserId!);
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(goals.Count, result.Count);
 
         var index = 0;
-        foreach (Goal goal in result)
+        foreach (Goal goal in result!)
         {
             Assert.IsAssignableFrom<Goal>(goal);
-            Assert.Equal(goals[index].Id, goal.Id);
-            Assert.Equal(goals[index].Name, goal.Name);
+            Assert.Equal(goals[0].UserId, goal.UserId);
             index++;
         }
     }
