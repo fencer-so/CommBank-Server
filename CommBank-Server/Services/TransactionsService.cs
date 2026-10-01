@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using CommBank.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CommBank.Services;
@@ -22,8 +23,15 @@ public class TransactionsService : ITransactionsService
     public async Task<Transaction?> GetAsync(string id) =>
         await _transactionsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-    public async Task CreateAsync(Transaction newTransaction) =>
-        await _transactionsCollection.InsertOneAsync(newTransaction);
+    public async Task CreateAsync(Transaction newTransaction)
+{
+    if (string.IsNullOrEmpty(newTransaction.Id))
+    {
+        newTransaction.Id = ObjectId.GenerateNewId().ToString();
+    }
+
+    await _transactionsCollection.InsertOneAsync(newTransaction);
+}
 
     public async Task UpdateAsync(string id, Transaction updatedTransaction) =>
         await _transactionsCollection.ReplaceOneAsync(x => x.Id == id, updatedTransaction);

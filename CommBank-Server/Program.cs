@@ -4,11 +4,10 @@ using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
 
 var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
@@ -20,6 +19,13 @@ IGoalsService goalsService = new GoalsService(mongoDatabase);
 ITagsService tagsService = new TagsService(mongoDatabase);
 ITransactionsService transactionsService = new TransactionsService(mongoDatabase);
 IUsersService usersService = new UsersService(mongoDatabase);
+
+builder.Services.AddSingleton<IAccountsService>(accountsService);
+builder.Services.AddSingleton<IAuthService>(authService);
+builder.Services.AddSingleton<IGoalsService>(goalsService);
+builder.Services.AddSingleton<ITagsService>(tagsService);
+builder.Services.AddSingleton<ITransactionsService>(transactionsService);
+builder.Services.AddSingleton<IUsersService>(usersService);
 
 builder.Services.AddSingleton(accountsService);
 builder.Services.AddSingleton(authService);
@@ -48,6 +54,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
 

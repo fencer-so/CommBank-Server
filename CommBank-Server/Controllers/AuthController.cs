@@ -8,10 +8,10 @@ namespace CommBank.Controllers;
 [Route("api/Auth")]
 public class AuthController : ControllerBase
 {
-    private readonly AuthService _authService;
+    private readonly IAuthService _authService;
 
-    public AuthController(AuthService authService) =>
-        _authService = authService;
+public AuthController(IAuthService authService) =>
+    _authService = authService;
 
     [HttpPost("Login")]
     public async Task<IActionResult> Post(LoginInput input)
