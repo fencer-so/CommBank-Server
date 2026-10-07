@@ -9,11 +9,13 @@ public class GoalsService : IGoalsService
 
     public GoalsService(IMongoDatabase mongoDatabase)
     {
-        _goalsCollection = mongoDatabase.GetCollection<Goal>("Goals");
+        _goalsCollection = mongoDatabase.GetCollection<Goal>("goals");
+
+        
     }
 
     public async Task<List<Goal>> GetAsync() =>
-        await _goalsCollection.Find(_ => true).ToListAsync();
+    await _goalsCollection.Find(_ => true).ToListAsync();
 
     public async Task<List<Goal>?> GetForUserAsync(string id) =>
         await _goalsCollection.Find(x => x.UserId == id).ToListAsync();
@@ -24,8 +26,16 @@ public class GoalsService : IGoalsService
     public async Task CreateAsync(Goal newGoal) =>
         await _goalsCollection.InsertOneAsync(newGoal);
 
-    public async Task UpdateAsync(string id, Goal updatedGoal) =>
-        await _goalsCollection.ReplaceOneAsync(x => x.Id == id, updatedGoal);
+    public async Task UpdateAsync(string id, Goal updatedGoal)
+{
+    var update = Builders<Goal>.Update
+        .Set(x => x.Icon, updatedGoal.Icon);
+
+    await _goalsCollection.UpdateOneAsync(
+        x => x.Id == id,
+        update
+    );
+}
 
     public async Task RemoveAsync(string id) =>
         await _goalsCollection.DeleteOneAsync(x => x.Id == id);
