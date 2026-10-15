@@ -9,7 +9,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("Secrets.json")
+    .AddEnvironmentVariables();
 
 var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("CommBank"));
 var mongoDatabase = mongoClient.GetDatabase("CommBank");
@@ -50,4 +53,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-

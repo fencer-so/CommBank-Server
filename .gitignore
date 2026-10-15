@@ -124,6 +124,7 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+.env
 
 # StyleCop
 StyleCopReport.xml
@@ -403,5 +404,4 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
-
 
