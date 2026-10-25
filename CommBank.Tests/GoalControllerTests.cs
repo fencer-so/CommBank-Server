@@ -62,13 +62,34 @@ public class GoalControllerTests
         Assert.NotEqual(goals[1], result.Value);
     }
 
+    
+    
+    
     [Fact]
-    public async void GetForUser()
+    public async Task GetForUser()
     {
         // Arrange
-        
+        var goals = collections.GetGoals();
+        var users = collections.GetUsers();
+
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+
+        GoalController controller = new(goalsService, usersService);
+
         // Act
-        
+        var result = await controller.GetForUser(users[0].Id!);
+
         // Assert
+        Assert.NotNull(result);
+        Assert.Equal(goals.Count, result!.Count);
+
+        for (int i = 0; i < goals.Count; i++)
+        {
+            Assert.Equal(goals[i].Id, result[i].Id);
+            Assert.Equal(goals[i].Name, result[i].Name);
+        }
     }
+
+
 }
