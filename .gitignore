@@ -11,6 +11,8 @@ autom4te.cache/
 tarballs/
 test-results/
 
+CommBank-Server/Secrets.json
+
 # Mac bundle stuff
 *.dmg
 *.app
