@@ -405,3 +405,7 @@ ASALocalRun/
 .localhistory/
 
 
+
+# Secrets and local configurations
+*Secrets.json
+Secrets.json
