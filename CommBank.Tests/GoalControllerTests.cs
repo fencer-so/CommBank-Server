@@ -65,10 +65,20 @@ public class GoalControllerTests
     [Fact]
     public async void GetForUser()
     {
-        // Arrange
-        
-        // Act
-        
-        // Assert
+        var goals = collections.GetGoals();
+        var users = collections.GetUsers();
+
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+
+        GoalController controller = new(goalsService, usersService);
+        var result = await controller.GetForUser(users[0].Id!);
+        Assert.NotNull(result);
+
+        foreach (Goal goal in result)
+        {
+           Assert.IsAssignableFrom<Goal>(goal);
+           Assert.Equal(users[0].Id, goal.UserId);
+        }
     }
 }
