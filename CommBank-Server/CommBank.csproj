@@ -2,9 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <RollForward>Major</RollForward>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>CommBank_Server</RootNamespace>
+    
     <AssemblyName>CommBank-Server</AssemblyName>
   </PropertyGroup>
 
