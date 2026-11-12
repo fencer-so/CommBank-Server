@@ -63,12 +63,36 @@ public class GoalControllerTests
     }
 
     [Fact]
-    public async void GetForUser()
+    public async Task GetForUser()
     {
         // Arrange
-        
+        var goals = collections.GetGoals();
+        var users = collections.GetUsers();
+        var expectedUserId = users[0].Id!;
+
+        // The fake goals collection does not assign users by default.
+        // Give each fixture goal the same owner so the user route can be verified.
+        foreach (Goal goal in goals)
+        {
+            goal.UserId = expectedUserId;
+        }
+
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+        GoalController controller = new(goalsService, usersService);
+
         // Act
-        
+        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
+        controller.ControllerContext.HttpContext = httpContext;
+        var result = await controller.GetForUser(expectedUserId);
+
         // Assert
+        Assert.NotNull(result);
+
+        foreach (Goal goal in result!)
+        {
+            Assert.IsAssignableFrom<Goal>(goal);
+            Assert.Equal(expectedUserId, goal.UserId);
+        }
     }
 }
