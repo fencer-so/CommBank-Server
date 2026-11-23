@@ -63,12 +63,42 @@ public class GoalControllerTests
     }
 
     [Fact]
-    public async void GetForUser()
+    public async Task GetForUser()
     {
         // Arrange
-        
+        var goals = collections.GetGoals();
+        var users = collections.GetUsers();
+        var userId = users[0].Id!;
+    
+        foreach (var goal in goals)
+        {
+            goal.UserId = userId;
+        }
+    
+        goals[0].Icon = "🏠";
+    
+        IGoalsService goalsService = new FakeGoalsService(goals, goals[0]);
+        IUsersService usersService = new FakeUsersService(users, users[0]);
+        GoalController controller = new(goalsService, usersService);
+        controller.ControllerContext.HttpContext =
+            new Microsoft.AspNetCore.Http.DefaultHttpContext();
+    
         // Act
-        
+        var result = await controller.GetForUser(userId);
+    
         // Assert
+        Assert.NotNull(result);
+        Assert.NotEmpty(result!);
+        Assert.Equal(goals.Count, result!.Count);
+    
+        Assert.All(result, goal =>
+        {
+            Assert.IsAssignableFrom<Goal>(goal);
+            Assert.Equal(userId, goal.UserId);
+        });
+    
+        var goalWithIcon = Assert.Single(result.Where(goal => goal.Id == goals[0].Id));
+        Assert.Equal("🏠", goalWithIcon.Icon);
     }
+
 }
