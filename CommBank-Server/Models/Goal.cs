@@ -7,6 +7,8 @@ public class Goal
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
+    
+
     public string? Id { get; set; }
 
     public string? Name { get; set; }
@@ -18,6 +20,8 @@ public class Goal
     public double Balance { get; set; } = 0.00;
 
     public DateTime Created { get; set; } = DateTime.Now;
+
+    public string? Icon { get; set; }
 
     [BsonRepresentation(BsonType.ObjectId)]
     public List<string>? TransactionIds { get; set; }
