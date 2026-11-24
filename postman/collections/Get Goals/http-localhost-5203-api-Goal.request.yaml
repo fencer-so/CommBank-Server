@@ -1,0 +1,6 @@
+$kind: http-request
+name: http://localhost:5203/api/Goal
+description: ""
+url: http://localhost:5203/api/Goal
+method: GET
+order: 1000
